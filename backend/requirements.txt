@@ -6,3 +6,4 @@ passlib[bcrypt]
 SQLModel
 httpx
 python-dotenv
+supabase
