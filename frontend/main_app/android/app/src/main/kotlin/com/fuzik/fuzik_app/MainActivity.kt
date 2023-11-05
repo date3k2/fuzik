@@ -1,4 +1,4 @@
-package com.example.fuzik_app
+package com.fuzik.fuzik_app
 
 import io.flutter.embedding.android.FlutterActivity
 
