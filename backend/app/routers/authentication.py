@@ -37,6 +37,11 @@ async def signup(
 ):
     email = form_data.username
     password = form_data.password
+    if len(password) < 6:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Password should be at least 6 characters",
+        )
     try:
         user = supabase.auth.sign_up({"email": email, "password": password})
         return user
