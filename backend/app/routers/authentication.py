@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Security
+from fastapi import APIRouter, Depends, HTTPException, status, Security, Body
 from fastapi.security import OAuth2PasswordRequestForm
+from models.user import UserInfo, UserSignup
 from db.supabase_service import get_supabase
 from typing import Annotated
 from supabase import Client
@@ -32,24 +33,31 @@ async def login(
 
 @router.post("/signup", description="Sign up new user")
 async def signup(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    user: Annotated[UserSignup, Body()],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
-    email = form_data.username
-    password = form_data.password
+    email = user.email
+    password = user.password
     if len(password) < 6:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Password should be at least 6 characters",
         )
     try:
-        user = supabase.auth.sign_up({"email": email, "password": password})
-        return user
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User already exists",
+        user = supabase.auth.sign_up(
+            {
+                "email": email,
+                "password": password,
+                "options": {"data": UserInfo(**user.dict()).dict()},
+            }
         )
+        return {"detail": "User created"}
+    except:
+        # raise HTTPException(
+        #     status_code=status.HTTP_401_UNAUTHORIZED,
+        #     detail="User already exists",
+        # )
+        raise
 
 
 @router.get("/get_user_info", description="Get information of logged in user")
