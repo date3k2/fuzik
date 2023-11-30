@@ -12,11 +12,12 @@ async def get_current_user(
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
     try:
-        payload = supabase.auth._decode_jwt(token)
-        email: str = payload.get("email")
-        if email is None:
+        payload = supabase.auth.get_user(token)
+        email: str = payload.user.email
+        role: str = payload.user.user_metadata.get("role", None)
+        if email is None or role is None:
             raise credentials_exception
-        return email
+        return email, role
     except:
         raise credentials_exception
 

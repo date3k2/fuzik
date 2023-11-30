@@ -1,58 +1,54 @@
-# from fastapi import APIRouter, Depends, HTTPException, status
-# from sqlmodel import Session, select
-# from ..models.user import User, UserCreate, UserRead, UserUpdate
-# from ..database import get_session
+from fastapi import APIRouter, Depends, HTTPException, status, Security, Body
+from db.supabase_service import get_supabase
+from typing import Annotated, Tuple
+from supabase import Client
+from utils.auth import get_current_user
+from models.enums import Role
+from models.user import UserInfo
+from fastapi.encoders import jsonable_encoder
 
-# router = APIRouter()
+router = APIRouter(tags=["Users"])
 
-# @router.post("/users/", response_model=UserRead)
-# def create_user(*, session: Session = Depends(get_session), user: UserCreate):
-#     db_user = session.exec(select(User).where(User.email == user.email)).first()
-#     if db_user:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="A user with this email already exists.",
-#         )
-#     db_user = User.from_orm(user)
-#     session.add(db_user)
-#     session.commit()
-#     session.refresh(db_user)
-#     return db_user
 
-# @router.get("/users/{user_id}", response_model=UserRead)
-# def read_user(*, session: Session = Depends(get_session), user_id: int):
-#     db_user = session.get(User, user_id)
-#     if not db_user:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND,
-#             detail="This user does not exist in the system.",
-#         )
-#     return db_user
+@router.patch(
+    "/signup_group_admin",
+    description="Sign up to be a group admin",
+    status_code=status.HTTP_201_CREATED,
+)
+async def signup_as_group_admin(
+    supabase: Annotated[Client, Depends(get_supabase)],
+    user_info: Annotated[Tuple[str, str], Security(get_current_user)],
+):
+    _, role = user_info
+    if role != Role.user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="You are already a group admin",
+        )
+    try:
+        supabase.auth.update_user({"data": {"role": Role.group_admin}})
+        return {"detail": "You are now a group admin"}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User already exists",
+        )
 
-# @router.put("/users/{user_id}", response_model=UserRead)
-# def update_user(*, session: Session = Depends(get_session), user_id: int, user: UserUpdate):
-#     db_user = session.get(User, user_id)
-#     if not db_user:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND,
-#             detail="This user does not exist in the system.",
-#         )
-#     user_data = user.dict(exclude_unset=True)
-#     for key, value in user_data.items():
-#         setattr(db_user, key, value)
-#     session.add(db_user)
-#     session.commit()
-#     session.refresh(db_user)
-#     return db_user
 
-# @router.delete("/users/{user_id}", response_model=UserRead)
-# def delete_user(*, session: Session = Depends(get_session), user_id: int):
-#     db_user = session.get(User, user_id)
-#     if not db_user:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND,
-#             detail="This user does not exist in the system.",
-#         )
-#     session.delete(db_user)
-#     session.commit()
-#     return db_user
+@router.patch("/update_user_info", description="Update user info")
+async def update_user_info(
+    supabase: Annotated[Client, Depends(get_supabase)],
+    user_info: Annotated[Tuple[str, str], Security(get_current_user)],
+    new_user_info: Annotated[UserInfo, Body()],
+):
+    email, _ = user_info
+    try:
+        supabase.auth.update_user(
+            {"data": jsonable_encoder(new_user_info, exclude=("role",))}
+        )
+        return {"detail": "User info updated"}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="You're not logged in",
+        )
