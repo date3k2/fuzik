@@ -1,5 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
+from datetime import date
+from .enums import Gender, Role
 
 
 class UserLogin(BaseModel):
@@ -9,9 +11,10 @@ class UserLogin(BaseModel):
 
 class UserInfo(BaseModel):
     name: str
-    gender: int
-    role: str
-    balance: int = 0
+    birthdate: Optional[date]
+    phone_number: Optional[str]
+    gender: Gender
+    role: Role = Role.user
 
 
 class UserSignup(UserLogin, UserInfo):
