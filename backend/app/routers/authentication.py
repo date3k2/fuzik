@@ -2,9 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status, Security, Body
 from fastapi.security import OAuth2PasswordRequestForm
 from models.user import UserInfo, UserSignup
 from db.supabase_service import get_supabase
-from typing import Annotated
+from typing import Annotated, Tuple
 from supabase import Client
 from utils.auth import get_current_user, oauth2_scheme
+from fastapi.encoders import jsonable_encoder
+from models.enums import Role
 
 router = APIRouter(tags=["Authentication"])
 
@@ -31,7 +33,9 @@ async def login(
         )
 
 
-@router.post("/signup", description="Sign up new user")
+@router.post(
+    "/signup", description="Sign up new user", status_code=status.HTTP_201_CREATED
+)
 async def signup(
     user: Annotated[UserSignup, Body()],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -44,20 +48,22 @@ async def signup(
             detail="Password should be at least 6 characters",
         )
     try:
-        user = supabase.auth.sign_up(
+        user.role = Role.user
+        res = supabase.auth.sign_up(
             {
                 "email": email,
                 "password": password,
-                "options": {"data": UserInfo(**user.dict()).dict()},
+                "options": {
+                    "data": jsonable_encoder(user, exclude=("password", "email"))
+                },
             }
         )
         return {"detail": "User created"}
     except:
-        # raise HTTPException(
-        #     status_code=status.HTTP_401_UNAUTHORIZED,
-        #     detail="User already exists",
-        # )
-        raise
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User already exists",
+        )
 
 
 @router.get("/get_user_info", description="Get information of logged in user")
@@ -90,9 +96,10 @@ async def get_user(
 @router.put("/change_password", description="Change password of logged in user")
 async def change_password(
     supabase: Annotated[Client, Depends(get_supabase)],
-    email: Annotated[str, Security(get_current_user)],
+    user_info: Annotated[Tuple[str, str], Security(get_current_user)],
     new_password: str,
 ):
+    email, role = user_info
     if not email:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -100,7 +107,7 @@ async def change_password(
         )
     try:
         supabase.auth.update_user({"password": new_password})
-        return {"message": "Password updated"}
+        return {"detail": "Password updated"}
 
     except:
         # Password should be at least 6 characters
@@ -118,3 +125,11 @@ async def reset_password(
     supabase.auth.reset_password_email(
         email, {"redirect_to": "http://localhost:3000/reset-password"}
     )
+
+
+# @router.put("/sos")
+# async def change_password(
+#     supabase: Annotated[Client, Depends(get_supabase)],
+#     d: Annotated[str, Security(get_s)],
+# ):
+#     return d
