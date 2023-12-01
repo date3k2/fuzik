@@ -7,17 +7,30 @@ from supabase import Client
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
-async def get_current_user(
+async def get_email(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
     try:
         payload = supabase.auth.get_user(token)
         email: str = payload.user.email
-        role: str = payload.user.user_metadata.get("role", None)
-        if email is None or role is None:
+        if email is None:
             raise credentials_exception
-        return email, role
+        return email
+    except:
+        raise credentials_exception
+
+
+async def get_role(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    supabase: Annotated[Client, Depends(get_supabase)],
+):
+    try:
+        payload = supabase.auth.get_user(token)
+        role: str = payload.user.user_metadata.get("role", None)
+        if role is None:
+            raise credentials_exception
+        return role
     except:
         raise credentials_exception
 

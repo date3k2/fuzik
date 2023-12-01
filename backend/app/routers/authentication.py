@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Security, Body
+from fastapi import APIRouter, Depends, HTTPException, status, Security, Body, Query
 from fastapi.security import OAuth2PasswordRequestForm
 from models.user import UserInfo, UserSignup
 from db.supabase_service import get_supabase
-from typing import Annotated, Tuple
+from typing import Annotated
 from supabase import Client
-from utils.auth import get_current_user, oauth2_scheme
+from utils.auth import get_email, oauth2_scheme
 from fastapi.encoders import jsonable_encoder
 from models.enums import Role
 
@@ -61,7 +61,7 @@ async def signup(
         return {"detail": "User created"}
     except:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_409_CONFLICT,
             detail="User already exists",
         )
 
@@ -96,24 +96,19 @@ async def get_user(
 @router.put("/change_password", description="Change password of logged in user")
 async def change_password(
     supabase: Annotated[Client, Depends(get_supabase)],
-    user_info: Annotated[Tuple[str, str], Security(get_current_user)],
-    new_password: str,
+    email: Annotated[str, Security(get_email)],
+    new_password: Annotated[
+        str, Query(min_length=6, description="New password", title="New password")
+    ],
 ):
-    email, role = user_info
-    if not email:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not logged in",
-        )
     try:
         supabase.auth.update_user({"password": new_password})
         return {"detail": "Password updated"}
 
     except:
-        # Password should be at least 6 characters
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Password should be at least 6 characters",
+            detail="Something went wrong",
         )
 
 
