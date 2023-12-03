@@ -4,9 +4,10 @@ from models.user import UserInfo, UserSignup
 from db.supabase_service import get_supabase
 from typing import Annotated
 from supabase import Client
-from utils.auth import get_email, oauth2_scheme
+from utils.auth import get_email, oauth2_scheme, get_user_response
 from fastapi.encoders import jsonable_encoder
 from models.enums import Role
+from gotrue.errors import AuthApiError
 
 router = APIRouter(tags=["Authentication"])
 
@@ -28,7 +29,7 @@ async def login(
         }
     except:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect email or password",
         )
 
@@ -59,24 +60,16 @@ async def signup(
             }
         )
         return {"detail": "User created"}
-    except:
+    except AuthApiError as e:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="User already exists",
         )
-
-
-@router.get("/get_user_info", description="Get information of logged in user")
-async def get_user(
-    supabase: Annotated[Client, Depends(get_supabase)],
-    token: Annotated[str, Depends(oauth2_scheme)],
-):
-    if not token:
+    except:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not logged in",
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Something went wrong",
         )
-    return supabase.auth.get_user(token)
 
 
 # @router.post("/signout", description="Sign out logged in user")

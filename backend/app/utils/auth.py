@@ -7,28 +7,36 @@ from supabase import Client
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
-async def get_email(
-    token: Annotated[str, Depends(oauth2_scheme)],
-    supabase: Annotated[Client, Depends(get_supabase)],
+async def get_user_response(
+    token: str, supabase: Annotated[Client, Depends(get_supabase)]
 ):
     try:
-        payload = supabase.auth.get_user(token)
-        email: str = payload.user.email
-        if email is None:
+        return supabase.auth.get_user(token)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Something went wrong",
+        )
+
+
+async def get_email(token: Annotated[str, Depends(oauth2_scheme)]):
+    try:
+        res = get_user_response(token)
+        if res is None:
             raise credentials_exception
+        email: str = res.user.email
         return email
     except:
         raise credentials_exception
 
 
-async def get_role(
-    token: Annotated[str, Depends(oauth2_scheme)],
-    supabase: Annotated[Client, Depends(get_supabase)],
-):
+async def get_role(token: Annotated[str, Depends(oauth2_scheme)]):
     try:
-        payload = supabase.auth.get_user(token)
-        role: str = payload.user.user_metadata.get("role", None)
-        if role is None:
+        res = get_user_response(token)
+        if res is None:
+            raise credentials_exception
+        role: str = res.user.user_metadata.get("role", None)
+        if not role:
             raise credentials_exception
         return role
     except:
