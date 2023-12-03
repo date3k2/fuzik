@@ -7,9 +7,7 @@ from supabase import Client
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
-async def get_user_response(
-    token: str, supabase: Annotated[Client, Depends(get_supabase)]
-):
+def get_user_response(token: str, supabase: Client):
     try:
         return supabase.auth.get_user(token)
     except:
@@ -19,9 +17,12 @@ async def get_user_response(
         )
 
 
-async def get_email(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_email(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    supabase: Annotated[Client, Depends(get_supabase)],
+):
     try:
-        res = get_user_response(token)
+        res = get_user_response(token, supabase)
         if res is None:
             raise credentials_exception
         email: str = res.user.email
@@ -30,9 +31,12 @@ async def get_email(token: Annotated[str, Depends(oauth2_scheme)]):
         raise credentials_exception
 
 
-async def get_role(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_role(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    supabase: Annotated[Client, Depends(get_supabase)],
+):
     try:
-        res = get_user_response(token)
+        res = get_user_response(token, supabase)
         if res is None:
             raise credentials_exception
         role: str = res.user.user_metadata.get("role", None)

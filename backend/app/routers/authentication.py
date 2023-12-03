@@ -4,7 +4,7 @@ from models.user import UserInfo, UserSignup
 from db.supabase_service import get_supabase
 from typing import Annotated
 from supabase import Client
-from utils.auth import get_email, oauth2_scheme, get_user_response
+from utils.auth import get_email
 from fastapi.encoders import jsonable_encoder
 from models.enums import Role
 from gotrue.errors import AuthApiError

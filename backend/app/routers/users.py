@@ -13,8 +13,9 @@ router = APIRouter(tags=["Users"])
 @router.get("/get_user_info", description="Get information of logged in user")
 async def get_user(
     token: Annotated[str, Depends(oauth2_scheme)],
+    supabase: Annotated[Client, Depends(get_supabase)],
 ):
-    return get_user_response(token)
+    return get_user_response(token, supabase)
 
 
 @router.patch(
