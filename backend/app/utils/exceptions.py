@@ -13,7 +13,7 @@ BAD_REQUEST = HTTPException(
 
 NOT_FOUND = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
-    detail="Resource not found",
+    detail="Email not found",
 )
 
 CONFLICT = HTTPException(

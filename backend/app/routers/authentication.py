@@ -9,7 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from models.enums import Role
 from gotrue.errors import AuthApiError
 from crud.user import update_user
-from utils.exceptions import BAD_REQUEST, CONFLICT
+from utils.exceptions import BAD_REQUEST, CONFLICT, NOT_FOUND
 
 router = APIRouter(tags=["Authentication"])
 
@@ -88,6 +88,43 @@ async def reset_password(
     supabase: Annotated[Client, Depends(get_supabase)],
     email: str,
 ):
-    supabase.auth.reset_password_email(
-        email, {"redirect_to": "http://localhost:3000/reset-password"}
-    )
+    try:
+        # F*ck Supabase API 🙂
+        if (
+            len(supabase.rpc("get_user_id_by_email", {"email": email}).execute().data)
+            > 0
+        ):
+            supabase.auth.reset_password_email(email)
+            return {"detail": "Reset password email sent"}
+        else:
+            raise NOT_FOUND
+    except:
+        raise NOT_FOUND
+
+
+@router.post("/reset_password_confirm", description="Reset password")
+async def reset_password_confirm(
+    supabase: Annotated[Client, Depends(get_supabase)],
+    email: Annotated[str, Query(description="Email", title="Email")],
+    new_password: Annotated[
+        str, Query(min_length=6, description="New password", title="New password")
+    ],
+    token: Annotated[
+        str, Query(description="Reset password token", title="Reset password token")
+    ],
+):
+    try:
+        supabase.auth.verify_otp(
+            {
+                "email": email,
+                "token": token,
+                "type": "email",
+            }
+        )
+        await update_user(supabase, password=new_password)
+        return {"detail": "Your password has been reset"}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect token",
+        )
