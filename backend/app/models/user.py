@@ -4,8 +4,11 @@ from datetime import date
 from .enums import Gender, Role
 
 
-class UserLogin(BaseModel):
+class UserBase(BaseModel):
     email: str = Field(description="Email of user", example="datvip@gmail.com")
+
+
+class UserLogin(UserBase):
     password: str
 
 
@@ -18,4 +21,8 @@ class UserInfo(BaseModel):
 
 
 class UserSignup(UserLogin, UserInfo):
+    pass
+
+
+class User(UserBase, UserInfo):
     pass

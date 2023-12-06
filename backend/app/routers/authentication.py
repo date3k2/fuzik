@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Security, Body, Query
 from fastapi.security import OAuth2PasswordRequestForm
-from models.user import UserInfo, UserSignup
+from models.user import UserSignup
 from db.supabase_service import get_supabase
 from typing import Annotated
 from supabase import Client
@@ -8,6 +8,8 @@ from utils.auth import get_email
 from fastapi.encoders import jsonable_encoder
 from models.enums import Role
 from gotrue.errors import AuthApiError
+from crud.user import update_user
+from utils.exceptions import BAD_REQUEST, CONFLICT
 
 router = APIRouter(tags=["Authentication"])
 
@@ -60,30 +62,10 @@ async def signup(
             }
         )
         return {"detail": "User created"}
-    except AuthApiError as e:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="User already exists",
-        )
+    except AuthApiError:
+        raise CONFLICT
     except:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Something went wrong",
-        )
-
-
-# @router.post("/signout", description="Sign out logged in user")
-# async def logout(
-#     supabase: Annotated[Client, Depends(get_supabase)],
-#     token: Annotated[str, Depends(oauth2_scheme)],
-# ):
-#     if not token:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="User not logged in",
-#         )
-#     supabase.auth.sign_out()
-#     return {"message": "User logged out"}
+        raise BAD_REQUEST
 
 
 @router.put("/change_password", description="Change password of logged in user")
@@ -95,14 +77,10 @@ async def change_password(
     ],
 ):
     try:
-        supabase.auth.update_user({"password": new_password})
+        await update_user(supabase, password=new_password)
         return {"detail": "Password updated"}
-
     except:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Something went wrong",
-        )
+        raise BAD_REQUEST
 
 
 @router.post("/reset_password", description="Send reset password email")
@@ -113,11 +91,3 @@ async def reset_password(
     supabase.auth.reset_password_email(
         email, {"redirect_to": "http://localhost:3000/reset-password"}
     )
-
-
-# @router.put("/sos")
-# async def change_password(
-#     supabase: Annotated[Client, Depends(get_supabase)],
-#     d: Annotated[str, Security(get_s)],
-# ):
-#     return d
