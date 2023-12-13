@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import authentication, users
+from routers import authentication, users, group_admin
 
 app = FastAPI(debug=True)
 
 app.include_router(authentication.router)
 app.include_router(users.router)
-
+app.include_router(group_admin.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
