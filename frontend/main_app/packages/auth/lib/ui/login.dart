@@ -9,7 +9,11 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
           child: Form(
         child: Column(children: [
-          TextFormField(),
+          TextFormField(
+            decoration: InputDecoration(
+              label: Text("Tên đăng nhập")
+            )
+          ),
           TextFormField(),
           Row(
             children: [
