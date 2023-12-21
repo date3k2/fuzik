@@ -14,11 +14,11 @@ from utils.auth import get_id
 from fastapi.encoders import jsonable_encoder
 from utils.exceptions import BAD_REQUEST
 
-router = APIRouter(tags=["Song"])
+router = APIRouter(tags=["Song"], prefix="/song")
 
 
 # upload mp3 file to supabase storage
-@router.post("/upload_music", description="Upload music file")
+@router.post("/upload", description="Upload music file")
 async def upload_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -46,7 +46,7 @@ async def upload_music(
 
 
 # get url of music file from supabase storage
-@router.get("/get_link_to_music", description="Get url of music file")
+@router.get("/get_link", description="Get url of music file")
 async def get_link_to_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -63,9 +63,9 @@ async def get_link_to_music(
 
 # get list of all song from search
 @router.get(
-    "/s", description="Get list of all music", response_model=List[Song]
+    "/search", description="Get list of all music", response_model=List[Song]
 )
-async def get_all_music(
+async def get_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
     query: str | None = None,
@@ -87,7 +87,7 @@ async def get_all_music(
 
 
 # delete song
-@router.delete("/delete_music", description="Delete music")
+@router.delete("/delete", description="Delete music")
 async def delete_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -107,7 +107,7 @@ async def delete_music(
 
 
 # change music info
-@router.patch("/change_music_info", description="Change music info")
+@router.patch("/change_info", description="Change music info")
 async def change_music_info(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],

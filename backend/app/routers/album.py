@@ -13,10 +13,10 @@ from utils.auth import get_id
 from fastapi.encoders import jsonable_encoder
 from utils.exceptions import BAD_REQUEST
 
-router = APIRouter(tags=["Album"])
+router = APIRouter(tags=["Album"], prefix="/album")
 
 
-@router.post("/create_album", description="Create album")
+@router.post("/create", description="Create album")
 async def create_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -32,7 +32,7 @@ async def create_album(
 
 
 # delete album
-@router.delete("/delete_album", description="Delete album")
+@router.delete("/delete", description="Delete album")
 async def delete_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -46,9 +46,7 @@ async def delete_album(
 
 
 # get list of all album
-@router.get(
-    "/get_all_album", description="Get list of all album", response_model=List[Album]
-)
+@router.get("/get_all", description="Get list of all album", response_model=List[Album])
 async def get_all_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -61,7 +59,7 @@ async def get_all_album(
 
 
 # modify album
-@router.patch("/modify_album", description="Modify album")
+@router.patch("/modify", description="Modify album")
 async def modify_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],

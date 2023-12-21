@@ -10,10 +10,10 @@ from fastapi.encoders import jsonable_encoder
 from crud.user import get_user, update_user
 from utils.exceptions import BAD_REQUEST
 
-router = APIRouter(tags=["User"])
+router = APIRouter(tags=["User"], prefix="/user")
 
 
-@router.get("/get_user_info", description="Get information of logged in user")
+@router.get("/get_info", description="Get information of logged in user")
 async def get_user_info(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -66,7 +66,7 @@ async def change_password(
         raise
 
 
-@router.patch("/update_user_info", description="Update user info")
+@router.patch("/update_info", description="Update user info")
 async def update_user_info(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -77,5 +77,58 @@ async def update_user_info(
             del new_user_info.role
         await update_user(supabase, data=jsonable_encoder(new_user_info))
         return {"detail": "User info updated"}
+    except:
+        raise BAD_REQUEST
+
+
+#  buy ticket
+@router.post("/buy_ticket", description="Buy ticket")
+async def buy_ticket(
+    supabase: Annotated[Client, Depends(get_supabase)],
+    user_id: Annotated[str, Security(get_id)],
+    concert_id: int,
+):
+    try:
+        number_of_tickets = (
+            supabase.table("concerts")
+            .select("number_of_tickets")
+            .eq("id", concert_id)
+            .execute()
+            .dict()["data"][0]["number_of_tickets"]
+        )
+        if number_of_tickets == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="There are no tickets left",
+            )
+        return {"detail": "Please navigate to the payment page"}
+    except:
+        raise BAD_REQUEST
+
+
+# Confirm payment
+@router.post("/confirm_payment", description="Confirm payment")
+async def confirm_payment(
+    supabase: Annotated[Client, Depends(get_supabase)],
+    user_id: Annotated[str, Security(get_id)],
+    concert_id: int,
+):
+    try:
+        number_of_tickets = (
+            supabase.table("concerts")
+            .select("number_of_tickets")
+            .eq("id", concert_id)
+            .execute()
+            .dict()["data"][0]["number_of_tickets"]
+        )
+        if number_of_tickets == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="There are no tickets left",
+            )
+        supabase.table("concerts").update(
+            {"number_of_tickets": number_of_tickets - 1}
+        ).eq("id", concert_id).execute()
+        return {"detail": "Payment successful"}
     except:
         raise BAD_REQUEST
