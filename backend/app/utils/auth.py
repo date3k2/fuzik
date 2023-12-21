@@ -15,7 +15,7 @@ def get_user_response(token: str, supabase: Client):
         raise BAD_REQUEST
 
 
-async def get_email(
+async def get_id(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
@@ -23,7 +23,7 @@ async def get_email(
         res = get_user_response(token, supabase)
         if res is None:
             raise UNAUTHORIZED
-        email: str = res.user.email
+        email: str = res.user.id
         return email
     except:
         raise UNAUTHORIZED

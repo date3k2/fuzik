@@ -4,7 +4,7 @@ from models.user import UserSignup
 from db.supabase_service import get_supabase
 from typing import Annotated
 from supabase import Client
-from utils.auth import get_email
+from utils.auth import get_id
 from fastapi.encoders import jsonable_encoder
 from models.enums import Role
 from gotrue.errors import AuthApiError
@@ -68,28 +68,12 @@ async def signup(
         raise BAD_REQUEST
 
 
-@router.put("/change_password", description="Change password of logged in user")
-async def change_password(
-    supabase: Annotated[Client, Depends(get_supabase)],
-    email: Annotated[str, Security(get_email)],
-    new_password: Annotated[
-        str, Query(min_length=6, description="New password", title="New password")
-    ],
-):
-    try:
-        await update_user(supabase, password=new_password)
-        return {"detail": "Password updated"}
-    except:
-        raise BAD_REQUEST
-
-
 @router.post("/reset_password", description="Send reset password email")
 async def reset_password(
     supabase: Annotated[Client, Depends(get_supabase)],
     email: str,
 ):
     try:
-        # F*ck Supabase API 🙂
         if (
             len(supabase.rpc("get_user_id_by_email", {"email": email}).execute().data)
             > 0

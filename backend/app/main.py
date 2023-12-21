@@ -1,12 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import authentication, users, group_admin
+from routers import authentication, users, group_admin, song, album
 
-app = FastAPI(debug=True)
+app = FastAPI()
 
 app.include_router(authentication.router)
 app.include_router(users.router)
 app.include_router(group_admin.router)
+app.include_router(song.router)
+app.include_router(album.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
