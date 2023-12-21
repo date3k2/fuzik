@@ -17,16 +17,15 @@ pip install -r requirements.txt
 3. Run the FastAPI application:
 
 ```bash
-uvicorn fastapi_app.main:app --reload
+$ cd backend/app
+$ python main.py
 ```
-
-The FastAPI application will start running at `http://localhost:8000`.
 
 ## Structure
 
 The backend is structured as follows:
 
-- `fastapi_app/`: This directory contains the FastAPI application.
+- `app/`: This directory contains the FastAPI application.
   - `main.py`: This is the main entry point of the FastAPI application.
   - `models/`: This directory contains the SQLModel models.
   - `routers/`: This directory contains the FastAPI routers.
@@ -43,7 +42,7 @@ pytest
 
 ## Documentation
 
-FastAPI provides automatic interactive API documentation. Once the application is running, you can view the documentation at `http://localhost:8000/docs`.
+FastAPI provides automatic interactive API documentation. Once the application is running, you can view the documentation at `http://127.0.0.1:5000/docs`.
 
 ## Security
 
