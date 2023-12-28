@@ -18,7 +18,7 @@ router = APIRouter(tags=["Song"], prefix="/song")
 
 
 # upload mp3 file to supabase storage
-@router.post("/upload", description="Upload music file")
+@router.post("", description="Upload music file")
 async def upload_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -46,7 +46,7 @@ async def upload_music(
 
 
 # get url of music file from supabase storage
-@router.get("/get_link", description="Get url of music file")
+@router.get("/link", description="Get url of music file")
 async def get_link_to_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -87,7 +87,7 @@ async def get_music(
 
 
 # delete song
-@router.delete("/delete", description="Delete music")
+@router.delete("", description="Delete music")
 async def delete_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -107,7 +107,7 @@ async def delete_music(
 
 
 # change music info
-@router.patch("/change_info", description="Change music info")
+@router.patch("/info", description="Change music info")
 async def change_music_info(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],

@@ -11,7 +11,7 @@ from typing import List
 router = APIRouter(tags=["Group"], prefix="/group")
 
 
-@router.post("/create_group", description="Create group")
+@router.post("", description="Create group")
 async def create_group(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
@@ -30,7 +30,7 @@ async def create_group(
     return {"detail": "Group created"}
 
 
-@router.get("/add_user", description="Modify group")
+@router.post("/user", description="Modify group")
 async def add_user(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -69,7 +69,7 @@ async def add_user(
     return {"detail": "User added to group"}
 
 
-@router.delete("/delete_user", description="Delete user from group")
+@router.delete("/user", description="Delete user from group")
 async def delete_user(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],

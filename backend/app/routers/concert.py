@@ -13,7 +13,7 @@ router = APIRouter(tags=["Concert"], prefix="/concert")
 
 
 # create concert
-@router.post("/create", description="Create concert")
+@router.post("", description="Create concert")
 async def create_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -27,7 +27,7 @@ async def create_concert(
 
 
 # get list of all concert
-@router.get("/get_all", description="Get list of all concert")
+@router.get("/all", description="Get list of all concert")
 async def get_all_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -40,7 +40,7 @@ async def get_all_concert(
 
 
 # modify concert
-@router.put("/modify", description="Modify concert")
+@router.put("", description="Modify concert")
 async def modify_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -56,7 +56,7 @@ async def modify_concert(
 
 
 # delete concert
-@router.delete("/delete", description="Delete concert")
+@router.delete("", description="Delete concert")
 async def delete_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
