@@ -15,10 +15,10 @@ $ pip install -r requirements.txt
 
 2. Set up your environment variables in the `.env` file. You will need to provide your Supabase URL and secret key.
 
-3. Run the FastAPI application:
+3. Run the FastAPI application with host and port of your choice:, example:
 
 ```bash
-$ python main.py
+$ uvicorn main:app --host 127.0.0.1 --port 5000 --reload
 ```
 
 ## Structure
