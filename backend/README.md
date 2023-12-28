@@ -9,7 +9,8 @@ To get started with the backend, follow these steps:
 1. Install the required Python packages:
 
 ```bash
-pip install -r requirements.txt
+$ cd backend/app
+$ pip install -r requirements.txt
 ```
 
 2. Set up your environment variables in the `.env` file. You will need to provide your Supabase URL and secret key.
@@ -17,7 +18,6 @@ pip install -r requirements.txt
 3. Run the FastAPI application:
 
 ```bash
-$ cd backend/app
 $ python main.py
 ```
 
@@ -30,7 +30,7 @@ The backend is structured as follows:
   - `models/`: This directory contains the SQLModel models.
   - `routers/`: This directory contains the FastAPI routers.
   - `tests/`: This directory contains tests for the FastAPI application.
-- `supabase/`: This directory contains the Supabase service.
+  - `db/`: This directory contains the Supabase service.
 
 ## Testing
 
@@ -50,4 +50,4 @@ The application uses token-based authentication for security. The tokens are gen
 
 ## Database
 
-The application uses Supabase as the backend and SQLModel as the ORM. The Supabase service is set up in `supabase/supabase_service.py`.
+The application uses Supabase as the backend and SQLModel as the ORM. The Supabase service is set up in `db/supabase_service.py`.
