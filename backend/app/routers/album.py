@@ -16,7 +16,7 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["Album"], prefix="/album")
 
 
-@router.post("/create", description="Create album")
+@router.post("", description="Create album")
 async def create_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -32,7 +32,7 @@ async def create_album(
 
 
 # delete album
-@router.delete("/delete", description="Delete album")
+@router.delete("", description="Delete album")
 async def delete_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -46,7 +46,7 @@ async def delete_album(
 
 
 # get list of all album
-@router.get("/get_all", description="Get list of all album", response_model=List[Album])
+@router.get("/all", description="Get list of all album", response_model=List[Album])
 async def get_all_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -59,7 +59,7 @@ async def get_all_album(
 
 
 # modify album
-@router.patch("/modify", description="Modify album")
+@router.patch("", description="Modify album")
 async def modify_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -87,7 +87,7 @@ async def modify_album(
 
 
 # get album and its songs
-@router.get("/get_album", description="Get album and its songs")
+@router.get("", description="Get album and its songs")
 async def get_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
