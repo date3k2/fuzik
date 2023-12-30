@@ -7,7 +7,7 @@ from fastapi import (
 )
 from models.music import Playlist, BasePlaylist
 from db.supabase_service import get_supabase
-from typing import Annotated, List, Tuple
+from typing import Annotated, List
 from supabase import Client
 from utils.auth import get_id
 from fastapi.encoders import jsonable_encoder
@@ -16,7 +16,7 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["Playlist"], prefix="/playlist")
 
 
-@router.post("/create", description="Create playlist")
+@router.post("", description="Create playlist")
 async def create_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -31,7 +31,7 @@ async def create_playlist(
         raise BAD_REQUEST
     
 
-@router.delete("/delete", description="Delete playlist")
+@router.delete("", description="Delete playlist")
 async def delete_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -44,7 +44,7 @@ async def delete_playlist(
         raise BAD_REQUEST
 
 # get list of all your playlist      
-@router.get("/get_your_playlist", description="Get list of your playlist", response_model=List[Playlist])
+@router.get("/all", description="Get list of your playlist", response_model=List[Playlist])
 async def get_all_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -57,7 +57,7 @@ async def get_all_album(
         raise BAD_REQUEST
 
 # modify playlist
-@router.patch("/modify", description="Modify playlist")
+@router.patch("", description="Modify playlist")
 async def modify_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -85,7 +85,7 @@ async def modify_playlist(
 
 
 # get playlist and its songs
-@router.get("/get_playlist", description="Get playlist and its songs")
+@router.get("/{playlist_id}", description="Get playlist and its songs")
 async def get_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
