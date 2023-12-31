@@ -20,3 +20,11 @@ class Album(BaseAlbum):
     id: int
     created_at: str
     user_id: str
+
+class BasePlaylist(BaseModel):
+    name: str
+
+class Playlist(BasePlaylist):
+    id: int
+    created_at: str
+    user_id: str
