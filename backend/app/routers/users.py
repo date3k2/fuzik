@@ -13,7 +13,7 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["User"], prefix="/user")
 
 
-@router.get("/get_info", description="Get information of logged in user")
+@router.get("/info", description="Get information of logged in user")
 async def get_user_info(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -51,7 +51,7 @@ async def signup_as_group_admin(
         raise BAD_REQUEST
 
 
-@router.put("/change_password", description="Change password of logged in user")
+@router.put("/password", description="Change password of logged in user")
 async def change_password(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -66,7 +66,7 @@ async def change_password(
         raise
 
 
-@router.patch("/update_info", description="Update user info")
+@router.patch("/info", description="Update user info")
 async def update_user_info(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
