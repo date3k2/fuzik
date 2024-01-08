@@ -1,0 +1,1 @@
+# Folder chứa dữ liệu crawl từ data ngoài (server)
