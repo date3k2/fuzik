@@ -1,29 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'song.dart';
+part of 'concert.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Song _$SongFromJson(Map<String, dynamic> json) => Song(
+Concert _$ConcertFromJson(Map<String, dynamic> json) => Concert(
       id: json['id'] as int?,
-      name: json['name'] as String,
+      name: json['name'] as String?,
+      location: json['location'] as String?,
       description: json['description'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      lyric: json['lyric'] as String?,
-      link: json['link'] as String,
-      userId: json['userId'] as String,
-      albumId: json['albumId'] as int?,
+      startAt: DateTime.parse(json['startAt'] as String),
+      groupId: json['groupId'] as int,
     );
 
-Map<String, dynamic> _$SongToJson(Song instance) => <String, dynamic>{
+Map<String, dynamic> _$ConcertToJson(Concert instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'location': instance.location,
       'description': instance.description,
       'createdAt': instance.createdAt.toIso8601String(),
-      'lyric': instance.lyric,
-      'link': instance.link,
-      'userId': instance.userId,
-      'albumId': instance.albumId,
+      'startAt': instance.startAt.toIso8601String(),
+      'groupId': instance.groupId,
     };

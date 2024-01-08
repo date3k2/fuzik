@@ -1,29 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'song.dart';
+part of 'playlist.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Song _$SongFromJson(Map<String, dynamic> json) => Song(
+Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist(
       id: json['id'] as int?,
-      name: json['name'] as String,
-      description: json['description'] as String?,
+      name: json['name'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      lyric: json['lyric'] as String?,
-      link: json['link'] as String,
       userId: json['userId'] as String,
-      albumId: json['albumId'] as int?,
+      PlaylistId:
+          (json['PlaylistId'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
-Map<String, dynamic> _$SongToJson(Song instance) => <String, dynamic>{
+Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'description': instance.description,
       'createdAt': instance.createdAt.toIso8601String(),
-      'lyric': instance.lyric,
-      'link': instance.link,
       'userId': instance.userId,
-      'albumId': instance.albumId,
+      'PlaylistId': instance.PlaylistId,
     };
