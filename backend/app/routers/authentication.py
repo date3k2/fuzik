@@ -19,6 +19,11 @@ async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
+    """
+    Login to the account
+    - **username**: the email of user
+    - **password**: the password of user
+    """
     email = form_data.username
     password = form_data.password
     try:
