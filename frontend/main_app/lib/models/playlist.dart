@@ -9,8 +9,8 @@ class Playlist {
   String? name;
   final DateTime createdAt;
   final String userId;
-  List<int>? PlaylistId;
-  Playlist({required this.id, this.name, required this.createdAt, required this.userId, this.PlaylistId});
+  List<int>? songId;
+  Playlist({required this.id, this.name, required this.createdAt, required this.userId, this.songId});
   factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 }

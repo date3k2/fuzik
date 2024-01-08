@@ -11,8 +11,7 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) => Playlist(
       name: json['name'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       userId: json['userId'] as String,
-      PlaylistId:
-          (json['PlaylistId'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      songId: (json['songId'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
 Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
@@ -20,5 +19,5 @@ Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
       'name': instance.name,
       'createdAt': instance.createdAt.toIso8601String(),
       'userId': instance.userId,
-      'PlaylistId': instance.PlaylistId,
+      'songId': instance.songId,
     };
