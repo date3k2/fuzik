@@ -37,7 +37,7 @@ async def signup_as_group_admin(
     """
     Sign up to be a group admin
     - **name**: each group must have a name
-    - **description**: a long description about this group
+    - **description**: a long description about this you
     """ 
     if role != Role.user:
         raise HTTPException(
