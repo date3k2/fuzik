@@ -115,11 +115,13 @@ async def get_playlist(
     try:
         res = (
             supabase.table("playlist")
-            .select("*")
+            .select("id,name,created_at,song_id")
             .eq("id", playlist_id)
             .execute()
             .dict()["data"]
         )
+        for i in range( len(res[0]["song_id"])):
+            res[0]["song_id"][i] = supabase.table("songs").select("*").eq("id", res[0]["song_id"][i]).execute().dict()["data"]
         return res
     except:
         raise BAD_REQUEST

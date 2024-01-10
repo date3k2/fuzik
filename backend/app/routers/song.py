@@ -18,13 +18,18 @@ router = APIRouter(tags=["Song"], prefix="/song")
 
 
 # upload mp3 file to supabase storage
-@router.post("", description="Upload music file")
+@router.post("", )
 async def upload_music(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
     music: UploadFile,
     name: str | None = None,
 ):
+    """
+    Upload music file
+    - **name**: each song must have a name
+    - **music**: a file mp3 song
+    """ 
     if music.content_type != "audio/mpeg":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

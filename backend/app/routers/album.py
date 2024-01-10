@@ -16,12 +16,17 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["Album"], prefix="/album")
 
 
-@router.post("", description="Create album")
+@router.post("")
 async def create_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     album: BaseAlbum,
 ):
+    """
+    Create album
+    - **name**: each album must have a name
+    - **description**: a long description about this album
+    """ 
     try:
         supabase.table("albums").insert(
             {"name": album.name, "description": album.description, "user_id": user_id}
@@ -32,12 +37,16 @@ async def create_album(
 
 
 # delete album
-@router.delete("", description="Delete album")
+@router.delete("", )
 async def delete_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     album_id: int,
 ):
+    """
+    Delete album
+    - **album_id**: id of album you want to  delete
+    """ 
     try:
         supabase.table("albums").delete().eq("id", album_id).execute()
         return {"detail": "Album deleted"}
@@ -59,13 +68,16 @@ async def get_all_album(
 
 
 # modify album
-@router.patch("", description="Modify album")
+@router.patch("",)
 async def modify_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     album: Album,
     songs: List[int],
 ):
+    """
+    Modify album
+    """ 
     try:
         if album.user_id != user_id:
             raise HTTPException(
@@ -87,12 +99,16 @@ async def modify_album(
 
 
 # get album and its songs
-@router.get("", description="Get album and its songs")
+@router.get("",)
 async def get_album(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     album_id: int,
 ):
+    """
+    Get album and its songs
+    - **album_id**: id of album you want to get detail
+    """ 
     try:
         res = (
             supabase.table("albums")
