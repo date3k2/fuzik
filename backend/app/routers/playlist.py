@@ -16,7 +16,7 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["Playlist"], prefix="/playlist")
 
 
-@router.post("/create",)
+@router.post("",)
 async def create_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -35,7 +35,7 @@ async def create_playlist(
         raise BAD_REQUEST
     
 
-@router.delete("/delete",)
+@router.delete("",)
 async def delete_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -57,7 +57,7 @@ async def delete_playlist(
         raise BAD_REQUEST
 
 # get list of all your playlist      
-@router.get("/all", description="Get list of your playlist", response_model=List[Playlist])
+@router.get("", description="Get list of your playlist", response_model=List[Playlist])
 async def get_all_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -70,7 +70,7 @@ async def get_all_playlist(
         raise BAD_REQUEST
 
 # modify playlist
-@router.patch("/modify/{playlist_id}", )
+@router.patch("/{playlist_id}", )
 async def modify_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
