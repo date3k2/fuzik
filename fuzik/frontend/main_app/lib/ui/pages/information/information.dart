@@ -1,3 +1,3 @@
-library auth;
+library profile;
 
 export 'features/ui.dart';
