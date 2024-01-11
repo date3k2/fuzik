@@ -108,7 +108,7 @@ async def delete_music(
         supabase.table("songs").delete().eq("id", song.id).execute()
         return {"detail": "Music deleted"}
     except:
-        raise
+        raise BAD_REQUEST
 
 
 # change music info

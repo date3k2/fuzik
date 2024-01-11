@@ -11,7 +11,7 @@ from typing import List
 router = APIRouter(tags=["Group"], prefix="/group")
 
 
-@router.post("/create_group",)
+@router.post("",)
 async def create_group(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
@@ -34,7 +34,7 @@ async def create_group(
     ).execute()
     return {"detail": "Group created"}
 
-@router.put("/change_group_info",)
+@router.put("",)
 async def create_group(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
@@ -68,7 +68,7 @@ async def create_group(
     return {"detail": "Group updated"}
 
 
-@router.get("/add_user")
+@router.post("/user")
 async def add_user(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -130,7 +130,7 @@ async def add_user(
     return {"detail": "User added to group"}
 
 
-@router.delete("/delete_user",)
+@router.delete("",)
 async def delete_user(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
@@ -185,8 +185,8 @@ async def delete_user(
     return {"detail": "User deleted from group"}
 
 
-@router.get("/show_all_group", description="Show all my group and user member")
-async def delete_user(
+@router.get("", description="Show all my group and user member")
+async def show_all_group(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
     id: Annotated[str, Security(get_id)],

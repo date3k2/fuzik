@@ -57,7 +57,7 @@ async def delete_playlist(
         raise BAD_REQUEST
 
 # get list of all your playlist      
-@router.get("", description="Get list of your playlist", response_model=List[Playlist])
+@router.get("/all", description="Get list of your playlist", response_model=List[Playlist])
 async def get_all_playlist(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
