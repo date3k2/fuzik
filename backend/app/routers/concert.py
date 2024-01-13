@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Security,HTTPException,status
+from fastapi import APIRouter, Depends, Security, HTTPException, status
 from typing import Annotated
 from fastapi.encoders import jsonable_encoder
 from supabase import Client
@@ -7,7 +7,7 @@ from typing import Annotated
 from supabase import Client
 from utils.auth import get_id
 from utils.exceptions import BAD_REQUEST, UNAUTHORIZED
-from models.concert import  ConcertInfo
+from models.concert import ConcertInfo
 
 
 router = APIRouter(tags=["Concert"], prefix="/concert")
@@ -27,7 +27,7 @@ async def create_concert(
     - **description**: a long description about this concert
     - **start_at**: the time concert start
     - **number_of_tiket**: number ticket of this concert
-    """ 
+    """
     group_id = supabase.rpc("get_group_id", {"user_id": user_id}).execute().data
     if group_id == None:
         raise UNAUTHORIZED
@@ -38,8 +38,8 @@ async def create_concert(
                 "location": concert_info.location,
                 "description": concert_info.description,
                 "start_at": concert_info.start_at,
-                "group_id":group_id,
-                "number_of_tickets":concert_info.number_of_tickets
+                "group_id": group_id,
+                "number_of_tickets": concert_info.number_of_tickets,
             }
         ).execute()
         return {"detail": "Concert created"}
@@ -47,8 +47,8 @@ async def create_concert(
         raise BAD_REQUEST
 
 
-#user get list of all concert
-@router.get("/get_all", description="Get list of all concert")
+# user get list of all concert
+@router.get("/all", description="Get list of all concert")
 async def get_all_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
@@ -59,7 +59,8 @@ async def get_all_concert(
     except:
         raise BAD_REQUEST
 
-#get list of your group concert
+
+# get list of your group concert
 @router.get("/get_group_concert", description="Get list of your group concert")
 async def get_all_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -70,10 +71,17 @@ async def get_all_concert(
         raise UNAUTHORIZED
 
     try:
-        res = supabase.table("concerts").select("*").match({"group_id" : group_id}).execute().dict()["data"]
+        res = (
+            supabase.table("concerts")
+            .select("*")
+            .match({"group_id": group_id})
+            .execute()
+            .dict()["data"]
+        )
         return res
     except:
         raise BAD_REQUEST
+
 
 # modify concert
 @router.put("")
@@ -81,7 +89,7 @@ async def modify_concert(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     concert_info: ConcertInfo,
-    concert_id: int
+    concert_id: int,
 ):
     """
     Change concert infomation
@@ -92,16 +100,22 @@ async def modify_concert(
     - **description**: new description about this group
     - **start_at**: new time concert start
     - **number_of_tiket**: number ticket of this concert
-    """ 
+    """
     group_id = supabase.rpc("get_group_id", {"user_id": user_id}).execute().data
     if group_id == None:
         raise UNAUTHORIZED
-    
-    
-    if supabase.table("concerts").select("*").match({"group_id" : group_id,"id": concert_id}).execute().data ==[]:
+
+    if (
+        supabase.table("concerts")
+        .select("*")
+        .match({"group_id": group_id, "id": concert_id})
+        .execute()
+        .data
+        == []
+    ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="This concert isn't manage by your group",
+            detail="This concert isn't managed by your group",
         )
     try:
         supabase.table("concerts").update(jsonable_encoder(concert_info)).eq(
@@ -122,18 +136,24 @@ async def delete_concert(
     """
     Delete concert
     - **concert_id**: id of concert your group manage
-    """ 
+    """
     group_id = supabase.rpc("get_group_id", {"user_id": user_id}).execute().data
     if group_id == None:
         raise UNAUTHORIZED
-    
-    
-    if supabase.table("concerts").select("*").match({"group_id" : group_id,"id": concert_id}).execute().data ==[]:
+
+    if (
+        supabase.table("concerts")
+        .select("*")
+        .match({"group_id": group_id, "id": concert_id})
+        .execute()
+        .data
+        == []
+    ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="This concert isn't manage by your group",
         )
-    
+
     try:
         supabase.table("concerts").delete().eq("id", concert_id).execute()
         return {"detail": "Concert deleted"}

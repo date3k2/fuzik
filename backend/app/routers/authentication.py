@@ -41,9 +41,7 @@ async def login(
         )
 
 
-@router.post(
-    "/signup", status_code=status.HTTP_201_CREATED
-)
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(
     user: Annotated[UserSignup, Body()],
     supabase: Annotated[Client, Depends(get_supabase)],
@@ -99,7 +97,7 @@ async def reset_password_confirm(
     supabase: Annotated[Client, Depends(get_supabase)],
     email: Annotated[str, Query(description="Email", title="Email")],
     new_password: Annotated[
-        str, Query(min_length=6, description="New password", title="New password")
+        str, Body(min_length=6, description="New password", title="New password")
     ],
     token: Annotated[
         str, Query(description="Reset password token", title="Reset password token")
