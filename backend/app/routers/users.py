@@ -13,17 +13,19 @@ from utils.exceptions import BAD_REQUEST
 router = APIRouter(tags=["User"], prefix="/user")
 
 
-@router.get("/info", description="Get information of logged in user")
+@router.get("/info")
 async def get_user_info(
     token: Annotated[str, Depends(oauth2_scheme)],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
+    """
+    Get information of logged in user
+    """
     return await get_user(supabase, token)
 
 
 @router.post(
     "/signup_group_admin",
-    description="Sign up to be a group admin",
     status_code=status.HTTP_201_CREATED,
 )
 async def signup_as_group_admin(
@@ -32,6 +34,11 @@ async def signup_as_group_admin(
     id: Annotated[str, Security(get_id)],
     group_info: GroupInfo,
 ):
+    """
+    Sign up to be a group admin
+    - **name**: each group must have a name
+    - **description**: a long description about this you
+    """ 
     if role != Role.user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -51,7 +58,7 @@ async def signup_as_group_admin(
         raise BAD_REQUEST
 
 
-@router.put("/password", description="Change password of logged in user")
+@router.put("/password")
 async def change_password(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
@@ -59,19 +66,36 @@ async def change_password(
         str, Query(min_length=6, description="New password", title="New password")
     ],
 ):
+    """
+    Change password of logged in user
+    - **New password**: new password of user
+    """
+    if len(new_password) < 6:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Password should be at least 6 characters",
+        )
     try:
         await update_user(supabase, password=new_password)
         return {"detail": "Password updated"}
     except:
-        raise
+        raise BAD_REQUEST
 
 
-@router.patch("/info", description="Update user info")
+@router.patch("/info")
 async def update_user_info(
     supabase: Annotated[Client, Depends(get_supabase)],
     id: Annotated[str, Security(get_id)],
     new_user_info: Annotated[UserInfo, Body()],
 ):
+    """
+    Update user infomation
+    - **name**: the new name of user
+    - **birthdate**: the new birthdate of user
+    - **phone_number**: the new phone number of user
+    - **gender**: the new gender of user
+    - **role**: not updated
+    """
     try:
         if new_user_info.role:
             del new_user_info.role
@@ -82,12 +106,16 @@ async def update_user_info(
 
 
 #  buy ticket
-@router.post("/buy_ticket", description="Buy ticket")
+@router.post("/buy_ticket")
 async def buy_ticket(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     concert_id: int,
 ):
+    """
+    Buy ticket
+    - **concert_id**: id of concert user want to by ticket
+    """
     try:
         number_of_tickets = (
             supabase.table("concerts")
@@ -107,12 +135,16 @@ async def buy_ticket(
 
 
 # Confirm payment
-@router.post("/confirm_payment", description="Confirm payment")
+@router.post("/confirm_payment")
 async def confirm_payment(
     supabase: Annotated[Client, Depends(get_supabase)],
     user_id: Annotated[str, Security(get_id)],
     concert_id: int,
 ):
+    """
+    Confirm payment
+    - **concert_id**: id of concert user paid 
+    """
     try:
         number_of_tickets = (
             supabase.table("concerts")

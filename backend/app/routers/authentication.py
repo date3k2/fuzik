@@ -14,11 +14,16 @@ from utils.exceptions import BAD_REQUEST, CONFLICT, NOT_FOUND
 router = APIRouter(tags=["Authentication"])
 
 
-@router.post("/login", description="Login user using email and password")
+@router.post("/login")
 async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
+    """
+    Login to the account
+    - **username**: the email of user
+    - **password**: the password of user
+    """
     email = form_data.username
     password = form_data.password
     try:
@@ -37,12 +42,15 @@ async def login(
 
 
 @router.post(
-    "/signup", description="Sign up new user", status_code=status.HTTP_201_CREATED
+    "/signup", status_code=status.HTTP_201_CREATED
 )
 async def signup(
     user: Annotated[UserSignup, Body()],
     supabase: Annotated[Client, Depends(get_supabase)],
 ):
+    """
+    Sign up new user
+    """
     email = user.email
     password = user.password
     if len(password) < 6:
