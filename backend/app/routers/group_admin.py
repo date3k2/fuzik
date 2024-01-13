@@ -35,7 +35,7 @@ async def create_group(
     return {"detail": "Group created"}
 
 @router.put("",)
-async def create_group(
+async def change_group(
     supabase: Annotated[Client, Depends(get_supabase)],
     role: Annotated[str, Security(get_role)],
     id: Annotated[str, Security(get_id)],
