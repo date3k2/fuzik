@@ -1,5 +1,6 @@
-import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fuzik_app/ui/navigator/navigator.dart';
+import 'package:fuzik_app/ui/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +12,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const LoginPage());
+    return MaterialApp.router(
+      title: 'Fuzik',
+      routerConfig: AppNavigator.router,
+      darkTheme: AppThemes.nightTheme,
+      themeMode: ThemeMode.dark,
+    );
   }
 }

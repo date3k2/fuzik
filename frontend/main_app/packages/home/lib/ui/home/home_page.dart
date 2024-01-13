@@ -1,4 +1,4 @@
-part of '../home.dart';
+part of '../../home.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
           items: List.generate(100, (index) => const EventView()),
           options: CarouselOptions(
             height: 200,
-            viewportFraction: 0.5,
             aspectRatio: 3 / 2,
             enlargeCenterPage: true,
             autoPlay: true,

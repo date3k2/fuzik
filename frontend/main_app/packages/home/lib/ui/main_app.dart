@@ -1,4 +1,4 @@
-part of 'home.dart';
+part of '../home.dart';
 
 class MainApp extends StatelessWidget {
   final List<NavigationDestination> items;
