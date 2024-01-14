@@ -1,6 +1,7 @@
 import 'package:fuzik_app/ui/pages/auth/auth.dart';
 import 'package:fuzik_app/ui/pages/player/player.dart';
 import 'package:fuzik_app/ui/pages/information/information.dart';
+import 'package:fuzik_app/ui/pages/event/event.dart';
 
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: ProfilePage());
+        home: SearchEventPage());
   }
 }
