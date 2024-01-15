@@ -14,21 +14,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return MaterialApp.router(
       title: 'Fuzik',
-      routerConfig: AppNavigator.router,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
       darkTheme: AppThemes.nightTheme,
       themeMode: ThemeMode.dark,
     );
-=======
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: ResetPasswordPage());
->>>>>>> nhatminh-fronend-dev
   }
 }
