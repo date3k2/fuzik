@@ -12,7 +12,6 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(

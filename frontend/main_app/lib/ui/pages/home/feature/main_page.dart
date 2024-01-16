@@ -26,13 +26,15 @@ class _MainPageState extends State<MainPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _controller;
 
+  bool _isShowFloatingButton = true;
+
   final _items = [
     const NavigationDestination(icon: Icon(Icons.home), label: "Trang chủ"),
     const NavigationDestination(
-        icon: Icon(Icons.notifications), label: "Nghệ sĩ"),
-    const NavigationDestination(icon: Icon(Icons.tab), label: "Bài hát"),
+        icon: Icon(Icons.headset_mic_rounded), label: "Nghệ sĩ"),
+    const NavigationDestination(icon: Icon(Icons.music_note), label: "Bài hát"),
     const NavigationDestination(
-        icon: Icon(Icons.account_circle), label: "Album"),
+        icon: Icon(Icons.album), label: "Album"),
   ];
 
   @override
@@ -66,6 +68,12 @@ class _MainPageState extends State<MainPage>
         ],
       ),
       drawer: Drawer(),
+      floatingActionButton: _isShowFloatingButton? FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        foregroundColor: Theme.of(context).colorScheme.background,
+        child: Icon(Icons.add),
+      ) : null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: widget.navigationShell.currentIndex,
         onDestinationSelected: _switchTab,
@@ -81,8 +89,9 @@ class _MainPageState extends State<MainPage>
 
   void _switchTab(int index) {
     setState(() {
-      widget.navigationShell.goBranch(index);
+      widget.navigationShell.goBranch(index, initialLocation: widget.navigationShell.currentIndex == index);
       _controller.animateTo(index);
+      _isShowFloatingButton = [2, 3].contains(index);
     });
   }
 
