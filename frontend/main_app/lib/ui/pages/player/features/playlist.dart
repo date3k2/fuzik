@@ -1,6 +1,12 @@
 part of 'ui.dart';
 
 class PlaylistPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => PlaylistPage()
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

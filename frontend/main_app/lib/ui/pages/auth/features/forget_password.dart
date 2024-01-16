@@ -1,6 +1,14 @@
 part of 'ui.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/forget-password',
+      name: 'forgotPassword',
+      builder: (context, state) => ForgotPasswordPage()
+  );
+
+  const ForgotPasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

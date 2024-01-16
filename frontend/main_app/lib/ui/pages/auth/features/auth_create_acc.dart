@@ -1,6 +1,14 @@
 part of 'ui.dart';
 
 class AuthCreateAccountPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/register/otp',
+      name: 'register-otp',
+      builder: (context, state) => AuthCreateAccountPage()
+  );
+
+  const AuthCreateAccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

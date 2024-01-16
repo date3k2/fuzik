@@ -1,6 +1,12 @@
 part of 'ui.dart';
 
 class LoginPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => LoginPage()
+  );
+
   const LoginPage({super.key});
 
   @override

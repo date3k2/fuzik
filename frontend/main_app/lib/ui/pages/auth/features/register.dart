@@ -1,6 +1,12 @@
 part of 'ui.dart';
 
 class RegisterPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => RegisterPage()
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

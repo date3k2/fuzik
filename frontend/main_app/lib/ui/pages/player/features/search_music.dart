@@ -1,6 +1,12 @@
 part of 'ui.dart';
 
 class SearchMusicPage extends StatelessWidget {
+  static final GoRoute route = GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => SearchMusicPage()
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,63 +92,63 @@ class SearchMusicPage extends StatelessWidget {
     );
   }
 }
-
-// Custom widget for album artwork
-class AlbumArtwork extends StatelessWidget {
-  final String title;
-  final String image;
-
-  const AlbumArtwork({Key? key, required this.title, required this.image})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(image),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          Text(title),
-        ],
-      ),
-    );
-  }
-}
-
-// Custom widget for recommendation list tile
-class RecommendationTile extends StatelessWidget {
-  final String title;
-  final String image;
-
-  const RecommendationTile({Key? key, required this.title, required this.image})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(image),
-            fit: BoxFit.cover,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      title: Text(title),
-      trailing: Icon(Icons.more_vert),
-    );
-  }
-}
+//
+// // Custom widget for album artwork
+// class AlbumArtwork extends StatelessWidget {
+//   final String title;
+//   final String image;
+//
+//   const AlbumArtwork({Key? key, required this.title, required this.image})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.all(8.0),
+//       child: Column(
+//         children: <Widget>[
+//           Container(
+//             width: 80,
+//             height: 80,
+//             decoration: BoxDecoration(
+//               image: DecorationImage(
+//                 image: AssetImage(image),
+//                 fit: BoxFit.cover,
+//               ),
+//               borderRadius: BorderRadius.circular(16),
+//             ),
+//           ),
+//           Text(title),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// // Custom widget for recommendation list tile
+// class RecommendationTile extends StatelessWidget {
+//   final String title;
+//   final String image;
+//
+//   const RecommendationTile({Key? key, required this.title, required this.image})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListTile(
+//       leading: Container(
+//         width: 40,
+//         height: 40,
+//         decoration: BoxDecoration(
+//           image: DecorationImage(
+//             image: AssetImage(image),
+//             fit: BoxFit.cover,
+//           ),
+//           borderRadius: BorderRadius.circular(8),
+//         ),
+//       ),
+//       title: Text(title),
+//       trailing: Icon(Icons.more_vert),
+//     );
+//   }
+// }
