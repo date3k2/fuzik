@@ -55,8 +55,8 @@ class SearchEventPage extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                AlbumArtwork(title: 'Event 1', image: 'assets/grainy_day.jpg'),
-                AlbumArtwork(title: 'Event 2', image: 'assets/bloom.jpg'),
+                EventArtwork(title: 'Event 1', image: 'assets/grainy_day.jpg'),
+                EventArtwork(title: 'Event 2', image: 'assets/bloom.jpg'),
               ],
             ),
           ),
@@ -71,10 +71,11 @@ class SearchEventPage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: <Widget>[
-                RecommendationTile(
+                RecommendationEvent(
                     title: 'Event 1', image: 'assets/grainy_day.jpg'),
-                RecommendationTile(title: 'Event 2', image: 'assets/bloom.jpg'),
-                RecommendationTile(
+                RecommendationEvent(
+                    title: 'Event 2', image: 'assets/bloom.jpg'),
+                RecommendationEvent(
                     title: 'Event 3', image: 'assets/back_to_her_man.jpg'),
               ],
             ),
@@ -86,11 +87,11 @@ class SearchEventPage extends StatelessWidget {
 }
 
 // Custom widget for album artwork
-class AlbumArtwork extends StatelessWidget {
+class EventArtwork extends StatelessWidget {
   final String title;
   final String image;
 
-  const AlbumArtwork({Key? key, required this.title, required this.image})
+  const EventArtwork({Key? key, required this.title, required this.image})
       : super(key: key);
 
   @override
@@ -118,11 +119,12 @@ class AlbumArtwork extends StatelessWidget {
 }
 
 // Custom widget for recommendation list tile
-class RecommendationTile extends StatelessWidget {
+class RecommendationEvent extends StatelessWidget {
   final String title;
   final String image;
 
-  const RecommendationTile({Key? key, required this.title, required this.image})
+  const RecommendationEvent(
+      {Key? key, required this.title, required this.image})
       : super(key: key);
 
   @override
