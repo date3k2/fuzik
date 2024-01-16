@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class SearchEventPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => SearchEventPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => SearchEventPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

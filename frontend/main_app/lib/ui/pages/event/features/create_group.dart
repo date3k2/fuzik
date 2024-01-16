@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class CreateGroupPage extends StatefulWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => CreateGroupPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => CreateGroupPage()
+  // );
 
   @override
   _CreateGroupPageState createState() => _CreateGroupPageState();

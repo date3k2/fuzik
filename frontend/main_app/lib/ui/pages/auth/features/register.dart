@@ -4,7 +4,8 @@ class RegisterPage extends StatelessWidget {
   static final GoRoute route = GoRoute(
       path: '/register',
       name: 'register',
-      builder: (context, state) => RegisterPage()
+      builder: (context, state) => RegisterPage(),
+      routes: [AuthCreateAccountPage.route]
   );
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuzik_app/ui/navigator/navigator.dart';
 import 'package:fuzik_app/ui/theme/theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sizer/sizer.dart';
 
 void main() async {
   await dotenv.load();
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
       darkTheme: AppThemes.nightTheme,
       themeMode: ThemeMode.dark,
       routerConfig: router,
+      builder: (context, widget) => Sizer(
+        builder: (context, orientation, device) => widget ?? const Scaffold(),
+      ),
     );
   }
 }

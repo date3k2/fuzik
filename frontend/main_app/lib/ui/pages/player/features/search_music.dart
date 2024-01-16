@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class SearchMusicPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => const SearchMusicPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => const SearchMusicPage()
+  // );
 
   const SearchMusicPage({super.key});
 

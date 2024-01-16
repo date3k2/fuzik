@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class ProfilePage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => ProfilePage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => ProfilePage()
+  // );
 
   @override
   Widget build(BuildContext context) {

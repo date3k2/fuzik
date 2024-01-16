@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class BuyTicketPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => BuyTicketPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => BuyTicketPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

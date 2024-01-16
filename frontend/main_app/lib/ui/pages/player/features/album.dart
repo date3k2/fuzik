@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class AlbumPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => AlbumPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => AlbumPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

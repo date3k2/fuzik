@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class UploadMusicPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => UploadMusicPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => UploadMusicPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

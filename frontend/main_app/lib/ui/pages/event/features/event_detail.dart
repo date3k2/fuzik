@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class EventDetailPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => EventDetailPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => EventDetailPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class PersonalPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => PersonalPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => PersonalPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 part of 'ui.dart';
 
 class CreateConcertPage extends StatelessWidget {
-  static final GoRoute route = GoRoute(
-      path: '/register',
-      name: 'register',
-      builder: (context, state) => CreateConcertPage()
-  );
+  // static final GoRoute route = GoRoute(
+  //     path: '/register',
+  //     name: 'register',
+  //     builder: (context, state) => CreateConcertPage()
+  // );
 
   @override
   Widget build(BuildContext context) {

@@ -2,11 +2,11 @@ import 'package:fuzik_app/ui/pages/auth/auth.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-      routes: [
+    initialLocation: LoginPage.route.path,
+    routes: [
         RegisterPage.route,
-        AuthCreateAccountPage.route,
         LoginPage.route,
-        RegisterPage.route,
+        ForgotPasswordPage.route,
         ResetPasswordPage.route,
       ]
 );
