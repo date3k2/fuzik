@@ -18,15 +18,18 @@ class ForgotPasswordPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'assets/logo.png', // Replace with your asset image path
-              height: 100.0,
-              width: 100.0,
-            ),
-            SizedBox(height: 30),
             Text(
               'QUÊN MẬT KHẨU',
-              style: TextStyle(color: Colors.yellow[700], fontSize: 24),
+              style: TextStyle(color: AppColors.yellow, fontSize: 24),
+            ),
+            SizedBox(height: 20),
+            Hero(
+              tag: 'logo',
+              child: Image.asset(
+                'assets/logo.png', // Replace with your asset image path
+                height: 100.0,
+                width: 100.0,
+              ),
             ),
             SizedBox(height: 20),
             Text(
@@ -37,33 +40,18 @@ class ForgotPasswordPage extends StatelessWidget {
             SizedBox(height: 20),
             TextFormField(
               decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
+                labelText: 'Địa chỉ email',
                 hintText: 'Nhập email',
                 prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none,
-                ),
               ),
               keyboardType: TextInputType.emailAddress,
-              style: TextStyle(color: Colors.black),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
+            OutlinedButton(
               onPressed: () {
                 // Handle the password reset request
               },
-              child: Text('QUÊN MẬT KHẨU'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.yellow[700],
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                textStyle: TextStyle(fontSize: 15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
+              child: Center(child: Text('QUÊN MẬT KHẨU')),
             ),
           ],
         ),

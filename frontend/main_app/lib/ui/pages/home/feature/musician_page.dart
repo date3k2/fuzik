@@ -1,17 +1,17 @@
 part of '../home.dart';
 
-class HomePage extends StatelessWidget {
+class MusicianPage extends StatelessWidget {
   static final branch = StatefulShellBranch(
      routes: [route]
   );
 
   static final route = GoRoute(
-      path: '/',
-      name: 'home',
-      builder: (context, state) => const HomePage()
+      path: '/musician',
+      name: 'musician',
+      builder: (context, state) => const MusicianPage()
   );
 
-  const HomePage({super.key});
+  const MusicianPage({super.key});
 
   @override
   Widget build(BuildContext context) {

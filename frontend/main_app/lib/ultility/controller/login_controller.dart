@@ -33,7 +33,7 @@ class LoginController with ChangeNotifier implements ILoginFunction {
 
   @override
   void login() async {
-    // TODO: implement login
+    context?.pushNamed('home');
   }
 
   @override

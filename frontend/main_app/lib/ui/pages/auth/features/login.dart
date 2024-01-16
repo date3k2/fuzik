@@ -48,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-            Center(child: Image.asset('assets/logo.png')),
+            Center(child: Hero(tag:'logo', child: Image.asset('assets/logo.png'))),
               const Spacer(),
             TextFormField(
               controller: controller.usernameController,
