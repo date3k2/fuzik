@@ -1,5 +1,3 @@
-import "dart:html";
-
 import "package:flutter/material.dart";
 import "package:fuzik_app/ui/shared_widgets/album_artwork.dart";
 import "package:fuzik_app/ui/shared_widgets/recommend_title.dart";

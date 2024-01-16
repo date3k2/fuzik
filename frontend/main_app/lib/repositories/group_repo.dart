@@ -1,9 +1,6 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fuzik_app/models/entity/group.dart';
-import 'package:fuzik_app/models/entity/models.dart';
-import 'package:fuzik_app/models/entity/user.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/base.dart';
 

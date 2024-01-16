@@ -4,23 +4,25 @@ class SearchMusicPage extends StatelessWidget {
   static final GoRoute route = GoRoute(
       path: '/register',
       name: 'register',
-      builder: (context, state) => SearchMusicPage()
+      builder: (context, state) => const SearchMusicPage()
   );
+
+  const SearchMusicPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Handle back action
           },
         ),
-        title: Text('Search Music'),
+        title: const Text('Search Music'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               // Handle search action
             },
@@ -31,7 +33,7 @@ class SearchMusicPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'What do you want to listening?',
@@ -41,14 +43,14 @@ class SearchMusicPage extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 16.0, bottom: 8.0),
             child: Text(
               'Play what you love',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 16.0, bottom: 16.0),
             child: Text(
               'Searching for your favorite songs and artists',
@@ -56,18 +58,18 @@ class SearchMusicPage extends StatelessWidget {
             ),
           ),
           // Horizontal list for album artwork
-          Container(
+          SizedBox(
             height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: <Widget>[
+              children: const <Widget>[
                 AlbumArtwork(
                     title: 'Grainy day', image: 'assets/grainy_day.jpg'),
                 AlbumArtwork(title: 'Bloom', image: 'assets/bloom.jpg'),
               ],
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               'RECOMMENDATIONS',
@@ -77,7 +79,7 @@ class SearchMusicPage extends StatelessWidget {
           // Vertical list for recommendations
           Expanded(
             child: ListView(
-              children: <Widget>[
+              children: const <Widget>[
                 RecommendationTile(
                     title: 'Grain day', image: 'assets/grainy_day.jpg'),
                 RecommendationTile(title: 'Bloom', image: 'assets/bloom.jpg'),
