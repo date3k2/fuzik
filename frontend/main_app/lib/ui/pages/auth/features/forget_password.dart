@@ -1,13 +1,31 @@
 part of 'ui.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
+class ForgotPasswordPage extends StatefulWidget {
   static final GoRoute route = GoRoute(
       path: '/forget-password',
       name: 'forgotPassword',
-      builder: (context, state) => ForgotPasswordPage()
-  );
+      builder: (context, state) => ForgotPasswordPage());
 
   const ForgotPasswordPage({super.key});
+
+  @override
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  late ForgetPasswordController controller;
+  final GlobalKey<FormState> key = GlobalKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = ForgetPasswordController(key);
+    controller.init(context);
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +56,8 @@ class ForgotPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextFormField(
+              key: key,
+              controller: controller.emailController, validator: controller.validateEmail,
               decoration: InputDecoration(
                 labelText: 'Địa chỉ email',
                 hintText: 'Nhập email',
@@ -47,9 +67,7 @@ class ForgotPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             OutlinedButton(
-              onPressed: () {
-                // Handle the password reset request
-              },
+              onPressed: controller.confirm,
               child: Center(child: Text('QUÊN MẬT KHẨU')),
             ),
           ],
