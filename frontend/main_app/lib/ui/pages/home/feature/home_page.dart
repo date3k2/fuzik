@@ -1,15 +1,17 @@
 part of '../home.dart';
 
 class HomePage extends StatelessWidget {
-  static final branch = StatefulShellBranch(
-     routes: [route]
-  );
+  static final branch = StatefulShellBranch(routes: [route]);
 
   static final route = GoRoute(
       path: '/',
       name: 'home',
-      builder: (context, state) => const HomePage()
-  );
+      builder: (context, state) => const HomePage(),
+      redirect: (context, state) async {
+        String? token = storage.getString('access_token');
+        if (token == null) return '/login';
+        return null;
+      });
 
   const HomePage({super.key});
 

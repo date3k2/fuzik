@@ -12,7 +12,7 @@ var dio = Dio(BaseOptions(
     receiveDataWhenStatusError: true));
 
 ///Thêm token vào header
-void addAuth(String token) {
+void addAuth(String? token) {
   dio = Dio(BaseOptions(
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 10),

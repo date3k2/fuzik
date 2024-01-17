@@ -1,15 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:fuzik_app/models/json.dart';
+import 'package:fuzik_app/models/response/token.dart';
 import 'package:fuzik_app/repositories/base.dart';
 
 class AuthRepository {
   /// POST /login
-  Future<JSON> login(JSON authRequest) async {
+  Future<Token> login(JSON authRequest) async {
     try {
       final uri = Uri.https(baseURL, 'login');
       final response = await dio.postUri(uri, data: authRequest, options: Options(contentType: "application/x-www-form-urlencoded"));
       // When response status code is 200
-      return response.data;
+      return Token.fromJson(response.data);
     } on DioException catch (e) {
       // Error by bad request
       if (e.response?.statusCode == 400) {

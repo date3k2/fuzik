@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/repo.dart';
-import 'package:fuzik_app/ultility/interface/login_function.dart';
-import 'package:fuzik_app/ultility/interface/register_function.dart';
+import 'package:fuzik_app/ultility/interface/auth/register_function.dart';
 import 'package:fuzik_app/ultility/regex/regex.dart';
 import 'package:go_router/go_router.dart';
 

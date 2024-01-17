@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage>
           IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Theme.of(context).colorScheme.secondary,))
         ],
       ),
-      drawer: Drawer(),
+      drawer: PersonalDrawer(),
       floatingActionButton: _isShowFloatingButton? FloatingActionButton(
         onPressed: () {},
         backgroundColor: Theme.of(context).colorScheme.onPrimary,

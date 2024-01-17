@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fuzik_app/data/storage.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/auth_repo.dart';
 import 'package:fuzik_app/repositories/base.dart';
 import 'package:fuzik_app/repositories/repo.dart';
-import 'package:fuzik_app/ultility/interface/login_function.dart';
+import 'package:fuzik_app/ultility/interface/auth/login_function.dart';
 import 'package:fuzik_app/ultility/regex/regex.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,8 +43,9 @@ class LoginController with ChangeNotifier implements ILoginFunction {
     if (!validateForm()) return;
     print(loginForm);
     try {
-      final result = await authRepo.login(loginForm);
-      addAuth(result['token']);
+      final token = await authRepo.login(loginForm);
+      addAuth(token.accessToken);
+      if (isSaveLogin) saveToken(token);
       context?.pushNamed('home');
     } on String catch (e) {
       if (context != null) {

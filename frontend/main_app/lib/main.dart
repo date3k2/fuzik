@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fuzik_app/data/storage.dart';
 import 'package:fuzik_app/ui/navigator/navigator.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:fuzik_app/ui/theme/theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
+  storage = await SharedPreferences.getInstance();
   await dotenv.load();
+  usePathUrlStrategy();
   runApp(const MyApp());
 }
 
