@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Form(
         key: key,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.disabled,
         child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(20, 5.h, 20, 5.h),
@@ -53,6 +53,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: controller.usernameController,
               keyboardType: TextInputType.emailAddress,
+              validator: controller.validateEmail,
               decoration: InputDecoration(
                 labelText: 'Địa chỉ email',
                 hintText: 'Nhập email',
@@ -62,6 +63,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: controller.passwordController,
               obscureText: !controller.isShowPassword,
+              validator: controller.validatePassword,
               decoration: InputDecoration(
                 labelText: 'Mật khẩu',
                 hintText: 'Nhập mật khẩu',

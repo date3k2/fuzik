@@ -5,7 +5,6 @@ final baseURL = dotenv.env["BASE_URL"] ?? '';
 
 ///Dio cho việc kết nối với API
 var dio = Dio(BaseOptions(
-    baseUrl: baseURL,
     contentType: 'application/json',
     connectTimeout: const Duration(seconds: 10),
     sendTimeout: const Duration(seconds: 30),
@@ -15,7 +14,6 @@ var dio = Dio(BaseOptions(
 ///Thêm token vào header
 void addAuth(String token) {
   dio = Dio(BaseOptions(
-      baseUrl: baseURL,
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 10),
       sendTimeout: const Duration(seconds: 30),

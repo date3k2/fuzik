@@ -7,7 +7,7 @@ class AuthRepository {
   Future<JSON> login(JSON authRequest) async {
     try {
       final uri = Uri.https(baseURL, 'login');
-      final response = await dio.postUri(uri, data: authRequest);
+      final response = await dio.postUri(uri, data: authRequest, options: Options(contentType: "application/x-www-form-urlencoded"));
       // When response status code is 200
       return response.data;
     } on DioException catch (e) {
@@ -31,7 +31,7 @@ class AuthRepository {
     try {
       final uri = Uri.https(baseURL, 'signup');
       final response = await dio.postUri(uri, data: request);
-      // When response status code is 200
+      // When response status code is 2xx
       return response.data;
     } on DioException catch (e) {
       // Error by bad request

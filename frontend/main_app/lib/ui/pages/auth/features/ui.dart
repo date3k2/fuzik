@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:fuzik_app/ui/theme/color.dart";
 import "package:fuzik_app/ultility/controller/login_controller.dart";
+import "package:fuzik_app/ultility/controller/register_controller.dart";
 import "package:go_router/go_router.dart";
 import "package:sizer/sizer.dart";
 
