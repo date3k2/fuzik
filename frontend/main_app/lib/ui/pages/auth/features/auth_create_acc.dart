@@ -1,6 +1,6 @@
 part of 'ui.dart';
 
-class AuthCreateAccountPage extends StatelessWidget {
+class AuthCreateAccountPage extends StatefulWidget {
   static final GoRoute route = GoRoute(
       path: 'otp',
       name: 'register-otp',
@@ -8,6 +8,21 @@ class AuthCreateAccountPage extends StatelessWidget {
   );
 
   const AuthCreateAccountPage({super.key});
+
+  @override
+  State<AuthCreateAccountPage> createState() => _AuthCreateAccountPageState();
+}
+
+class _AuthCreateAccountPageState extends State<AuthCreateAccountPage> {
+  late OtpResetPasswordController controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = OtpResetPasswordController();
+    controller.addListener(() {setState(() {
+    });});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +61,20 @@ class AuthCreateAccountPage extends StatelessWidget {
                 labelText: 'Mã OTP',
                 hintText: 'ĐIỀN MÃ OTP',
                 prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
+                  suffixIcon: IconButton(
+                    icon: Icon(controller.isShowOtp? Icons.visibility_off: Icons.visibility),
+                    onPressed: controller.setShowOtp,
+                  )
               ),
               keyboardType: TextInputType.number,
+              obscureText: !controller.isShowOtp,
             ),
             SizedBox(height: 20),
             OutlinedButton(
               onPressed: () {
                 // Handle OTP verification
               },
-              child: Center(child: Text('ĐỒNG Ý TẠO TÀI KHOẢN')),
+              child: Center(child: Text('XÁC NHẬN')),
             ),
             SizedBox(height: 10),
             Row(

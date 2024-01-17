@@ -5,7 +5,7 @@ class RegisterPage extends StatelessWidget {
       path: '/register',
       name: 'register',
       builder: (context, state) => RegisterPage(),
-      routes: [AuthCreateAccountPage.route]);
+      );
 
   @override
   Widget build(BuildContext context) {

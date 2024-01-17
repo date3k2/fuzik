@@ -4,6 +4,7 @@ class ForgotPasswordPage extends StatefulWidget {
   static final GoRoute route = GoRoute(
       path: '/forget-password',
       name: 'forgotPassword',
+      routes: [AuthCreateAccountPage.route],
       builder: (context, state) => ForgotPasswordPage());
 
   const ForgotPasswordPage({super.key});
@@ -14,7 +15,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   late ForgetPasswordController controller;
-  final GlobalKey<FormState> key = GlobalKey();
+  final GlobalKey<FormFieldState> key = GlobalKey();
 
   @override
   void initState() {
@@ -61,7 +62,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               decoration: InputDecoration(
                 labelText: 'Địa chỉ email',
                 hintText: 'Nhập email',
-                prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
               ),
               keyboardType: TextInputType.emailAddress,
             ),

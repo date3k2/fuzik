@@ -51,14 +51,14 @@ class AuthRepository {
   }
 
   /// POST /reset_password
-  Future<JSON> resetPassword(JSON request) async {
+  Future<JSON> resetPassword(String email) async {
     try {
-      final uri = Uri.https(baseURL, 'signup');
-      final response = await dio.postUri(uri, data: request);
+      final uri = Uri.https(baseURL, 'reset_password', {'email': email});
+      final response = await dio.postUri(uri);
       // When response status code is 200
       return response.data;
     } on DioException catch (e) {
-      // Error by bad request
+      // Error by not found
       if (e.response?.statusCode == 404) {
         throw e.response?.data['detail'];
       }

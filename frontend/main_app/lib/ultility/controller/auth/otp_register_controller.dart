@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fuzik_app/ultility/interface/auth/otp_register_function.dart';
+import 'package:fuzik_app/ultility/interface/auth/otp_reset_password_function.dart';
 
 
-class OtpRegisterController with ChangeNotifier implements IOtpRegisterFunction {
-  OtpRegisterController();
+class OtpResetPasswordController with ChangeNotifier implements IOtpResetPasswordFunction {
+  OtpResetPasswordController();
 
   BuildContext? context;
 
@@ -41,6 +41,8 @@ class OtpRegisterController with ChangeNotifier implements IOtpRegisterFunction 
 
   @override
   void setShowOtp() {
+      isShowOtp = !isShowOtp;
+      notifyListeners();
     // TODO: implement setShowOtp
   }
 }
