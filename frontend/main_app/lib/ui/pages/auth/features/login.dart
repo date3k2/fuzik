@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
+              const Spacer(flex: 10),
             Center(child: Hero(tag:'logo', child: Image.asset('assets/logo.png'))),
               const Spacer(),
             TextFormField(
@@ -97,7 +97,8 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: controller.createAccount,
                 child: Center(
                   child: Text("Tạo tài khoản mới"),
-                ))
+                )),
+              const Spacer(flex: 10)
           ]),
         ),
       ));

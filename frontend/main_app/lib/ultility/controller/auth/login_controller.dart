@@ -45,7 +45,7 @@ class LoginController with ChangeNotifier implements ILoginFunction {
     try {
       final token = await authRepo.login(loginForm);
       addAuth(token.accessToken);
-      if (isSaveLogin) saveToken(token);
+      saveToken(token);
       context?.pushNamed('home');
     } on String catch (e) {
       if (context != null) {
