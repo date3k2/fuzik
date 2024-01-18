@@ -45,8 +45,8 @@ class LoginController with ChangeNotifier implements ILoginFunction {
     try {
       final token = await authRepo.login(loginForm);
       addAuth(token.accessToken);
-      saveToken(token);
-      context?.pushNamed('home');
+      saveToken(token, isSaveLogin);
+      context?.goNamed('home');
     } on String catch (e) {
       if (context != null) {
         ScaffoldMessenger.of(context!)
