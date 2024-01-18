@@ -7,6 +7,7 @@ import "package:fuzik_app/ultility/controller/auth/otp_register_controller.dart"
 import "package:fuzik_app/ultility/controller/auth/register_controller.dart";
 import "package:go_router/go_router.dart";
 import "package:sizer/sizer.dart";
+import 'package:intl/intl.dart';
 
 part 'login.dart';
 part 'register.dart';

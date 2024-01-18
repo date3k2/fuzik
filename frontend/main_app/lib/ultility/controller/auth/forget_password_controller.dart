@@ -8,14 +8,20 @@ import 'package:go_router/go_router.dart';
 class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFunction
 {
 
+  bool isShowPassword = false;
+  bool isShowRetypePassword = false;
   final GlobalKey<FormFieldState> key;
   ForgetPasswordController(this.key);
   BuildContext? context;
   late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController resetPasswordController;
   void init(BuildContext context)
   {
       this.context = context;
       emailController = TextEditingController();
+      passwordController = TextEditingController();
+      resetPasswordController = TextEditingController();
   }
 
 
@@ -26,7 +32,10 @@ class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFun
         return;
       try {
         await authRepo.resetPassword(emailController.text);
-        if (context != null) context?.push('/forget-password/otp', extra: emailController.text);
+        if (context != null) context?.push('/forget-password/otp', extra: {
+          'email': emailController.text,
+          'password': passwordController.text
+        });
       }
       on String catch (e) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text(e)));
@@ -44,6 +53,38 @@ class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFun
         return null;
      }
     return "Vui lòng nhập email chính xác!";
+  }
+
+  @override
+  String? validatePassword(String? password)
+  {
+    // TODO: implement validatePassword
+    if (password == null) return "Vui lòng điền mật khẩu";
+    if (passwordRegEx.hasMatch(password)) return null;
+    return "Mật khẩu độ dài 8 và chỉ gồm các ký tự ngoài khoảng trắng";
+  }
+
+  @override
+  String? validateRetypePassword(String? password)
+  {
+    // TODO: implement validateResetPassword
+    if (password == null) return "Vui lòng điền lại mật khẩu";
+    if (password == passwordController.text) return null;
+    return "Mật khẩu nhập lại không đúng";
+  }
+
+  @override
+  void setShowPassword() {
+    // TODO: implement setShowPassword
+    isShowPassword = !isShowPassword;
+    notifyListeners();
+  }
+
+  @override
+  void setShowRetypePassword() {
+    // TODO: implement setShowRetypePassword
+    isShowRetypePassword = !isShowRetypePassword;
+    notifyListeners();
   }
 
 }
