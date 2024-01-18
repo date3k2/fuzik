@@ -20,7 +20,7 @@ class AlbumPage extends StatelessWidget {
       children: [
         //TODO: Implement events
         CarouselSlider(
-          items: List.generate(100, (index) => const EventView()),
+          items: List.generate(100, (index) => const ConcertView()),
           options: CarouselOptions(
             height: 200,
             aspectRatio: 3 / 2,

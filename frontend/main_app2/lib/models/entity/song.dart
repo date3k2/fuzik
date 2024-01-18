@@ -8,9 +8,12 @@ class Song
   final int? id;
   final String name;
   final String? description;
+  @JsonKey(name:"created_at")
   final DateTime createdAt;
   final String? lyric;
+  @JsonKey(name:"name_in_storage")
   final String link;
+  @JsonKey(name:"user_id")
   final String userId;
   final int? albumId;
 

@@ -54,10 +54,10 @@ class AlbumRepository {
     }
   }
 
-  /// GET /album
+  /// GET /album/all
   Future<List<Album>> getAllAlbum() async {
     try {
-      final uri = Uri.https(baseURL, 'album');
+      final uri = Uri.https(baseURL, 'album/all');
       final response = await dio.getUri(uri);
       // When response status code is 200
       return (response.data as List).map((e) => Album.fromJson(e)).toList();

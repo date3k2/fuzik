@@ -64,7 +64,7 @@ class SongRepository {
       final uri = Uri.https(baseURL, 'song/link', {'name_in_storage': name});
       final response = await dio.getUri(uri);
       // When response status code is 200
-      return response.data;
+      return (response.data as JSON)['signedURL'];
     } on DioException catch (e) {
       // Error by bad request
       if (e.response?.statusCode == 400) {

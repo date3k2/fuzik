@@ -20,3 +20,12 @@ void addAuth(String? token) {
       receiveTimeout: const Duration(seconds: 30),
       headers: {"Authorization": "Bearer $token"}));
 }
+
+void removeToken() {
+  dio = Dio(BaseOptions(
+      contentType: 'application/json',
+      connectTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      receiveDataWhenStatusError: true));
+}

@@ -25,7 +25,7 @@ abstract class AppThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(10)
         )

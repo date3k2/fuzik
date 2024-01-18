@@ -11,9 +11,14 @@ Concert _$ConcertFromJson(Map<String, dynamic> json) => Concert(
       name: json['name'] as String?,
       location: json['location'] as String?,
       description: json['description'] as String?,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      startAt: DateTime.parse(json['startAt'] as String),
-      groupId: json['groupId'] as int,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      startAt: json['start_at'] == null
+          ? null
+          : DateTime.parse(json['start_at'] as String),
+      groupId: json['group_id'] as int?,
+      numberOfTickets: json['number_of_tickets'] as int?,
     );
 
 Map<String, dynamic> _$ConcertToJson(Concert instance) => <String, dynamic>{
@@ -21,7 +26,8 @@ Map<String, dynamic> _$ConcertToJson(Concert instance) => <String, dynamic>{
       'name': instance.name,
       'location': instance.location,
       'description': instance.description,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'startAt': instance.startAt.toIso8601String(),
-      'groupId': instance.groupId,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'start_at': instance.startAt?.toIso8601String(),
+      'group_id': instance.groupId,
+      'number_of_tickets': instance.numberOfTickets,
     };

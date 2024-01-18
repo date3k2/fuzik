@@ -10,10 +10,15 @@ class Concert
   final String? name;
   final String? location;
   final String? description;
-  final DateTime createdAt;
-  final DateTime startAt;
-  final int groupId;
-  Concert({required this.id, required this.name, this.location,required this.description, required this.createdAt, required this.startAt, required this.groupId});
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'start_at')
+  final DateTime? startAt;
+  @JsonKey(name: 'group_id')
+  final int? groupId;
+  @JsonKey(name: 'number_of_tickets')
+  final int? numberOfTickets;
+  Concert({this.id, this.name, this.location, this.description, this.createdAt, this.startAt, this.groupId, this.numberOfTickets});
   factory Concert.fromJson(Map<String, dynamic> json) => _$ConcertFromJson(json);
   Map<String, dynamic> toJson() => _$ConcertToJson(this);
 }

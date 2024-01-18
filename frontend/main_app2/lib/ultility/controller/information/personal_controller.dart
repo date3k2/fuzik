@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/data/storage.dart';
+import 'package:fuzik_app/repositories/base.dart';
 import 'package:fuzik_app/ultility/interface/information/personal_function.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,6 +42,7 @@ class PersonalController with ChangeNotifier implements IPersonalFunction {
       actions: [
         TextButton(onPressed: () async {
           await storage.clear();
+          removeToken();
           if (context.mounted) context.go('/login');
         }, child: Text("Đăng xuất", style: TextStyle(color: Theme.of(context).colorScheme.error),)),
         TextButton(onPressed: () {

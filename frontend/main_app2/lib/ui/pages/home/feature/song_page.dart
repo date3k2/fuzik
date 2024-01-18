@@ -1,67 +1,71 @@
 part of '../home.dart';
 
-class SongPage extends StatelessWidget {
-  static final branch = StatefulShellBranch(
-     routes: [route]
-  );
+class SongPage extends StatefulWidget {
+  static final branch = StatefulShellBranch(routes: [route]);
 
   static final route = GoRoute(
       path: '/song',
       name: 'song',
-      builder: (context, state) => const SongPage()
-  );
+      builder: (context, state) => const SongPage());
 
   const SongPage({super.key});
 
   @override
+  State<SongPage> createState() => _SongPageState();
+}
+
+class _SongPageState extends State<SongPage> {
+  late final SongController controller;
+  late Future _future;
+
+  @override
+  void initState() {
+    super.initState();
+    int _reset = 0;
+    controller = SongController(context);
+    _future = controller.getSong;
+    controller.addListener(() {
+      _future = controller.getSong;
+      setState(() {
+        _reset++;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(10),
-      children: [
-        //TODO: Implement events
-        CarouselSlider(
-          items: List.generate(100, (index) => const EventView()),
-          options: CarouselOptions(
-            height: 200,
-            aspectRatio: 3 / 2,
-            enlargeCenterPage: true,
-            autoPlay: true,
-          ),
-        ),
-        //TODO: Implement Album
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Album", style: Theme.of(context).textTheme.titleLarge),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
-          ],
-        ),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (context, index) => AlbumView(),
-              itemCount: 10),
-        ),
-        //TODO: Implement Playlist
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Playlist", style: Theme.of(context).textTheme.titleLarge),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
-          ],
-        ),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => PlaylistView(),
-              itemCount: 10),
-        )
-      ],
+    return RefreshIndicator(
+      onRefresh: controller.refresh,
+      child: FutureBuilder(
+          future: _future,
+          builder: (context, snapshot) {
+            if (snapshot.hasError)
+              return Center(
+                child: Icon(Icons.error),
+              );
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+            return SafeArea(
+              child: ListView.separated(
+                  itemCount: snapshot.requireData.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == snapshot.requireData.length) {
+                      return const SizedBox(
+                          height: 100,
+                          child: Center(
+                              child: Text(
+                            "Bạn đã lướt đến cuối danh sách",
+                            textAlign: TextAlign.center,
+                          )));
+                    }
+                    return SongTile(
+                      song: snapshot.requireData[index],
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const Divider(thickness: 2)),
+            );
+          }),
     );
   }
 }

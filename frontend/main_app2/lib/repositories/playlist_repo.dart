@@ -58,7 +58,7 @@ class PlaylistRepository {
   /// GET /playlist
   Future<List<Playlist>> getAllPlaylist() async {
     try {
-      final uri = Uri.https(baseURL, 'playlist');
+      final uri = Uri.https(baseURL, 'playlist/all');
       final response = await dio.getUri(uri);
       // When response status code is 200
       return (response.data as List).map((e) => Playlist.fromJson(e)).toList();

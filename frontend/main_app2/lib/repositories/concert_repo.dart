@@ -58,7 +58,7 @@ class ConcertRepository {
   /// GET /concert
   Future<List<Concert>> getAllConcert() async {
     try {
-      final uri = Uri.https(baseURL, 'concert/get_all');
+      final uri = Uri.https(baseURL, 'concert/all');
       final response = await dio.getUri(uri);
       // When response status code is 200
       return (response.data as List).map((e) => Concert.fromJson(e)).toList();
