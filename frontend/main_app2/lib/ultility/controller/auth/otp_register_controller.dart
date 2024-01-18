@@ -19,7 +19,7 @@ class OtpResetPasswordController with ChangeNotifier implements IOtpResetPasswor
 
   JSON? resetPasswordInfo;
 
-  Stopwatch timer  = Stopwatch();
+  Stopwatch timer  = Stopwatch()..start();
   final int timeLimit = 90;
 
   void init(BuildContext context) {
@@ -28,9 +28,13 @@ class OtpResetPasswordController with ChangeNotifier implements IOtpResetPasswor
     resetPasswordInfo = GoRouterState.of(context).extra as JSON?;
   }
 
+  int _timeLeft = 90;
+
   Duration get timeLeft {
-    int timeLeft = timeLimit - timer.elapsed.inSeconds;
-    if (timeLeft > 0) return Duration(seconds: timeLeft);
+    int time = timeLimit - timer.elapsed.inSeconds;
+    if (time != _timeLeft && time >= 0) notifyListeners();
+    _timeLeft = time;
+    if (_timeLeft > 0) return Duration(seconds: _timeLeft);
     return Duration.zero;
   }
 
@@ -42,6 +46,7 @@ class OtpResetPasswordController with ChangeNotifier implements IOtpResetPasswor
   {
     try
     {
+        print(timeLeft);
         if (timeLeft.inSeconds <= 0) throw "Mã OTP hết hạn";
         final tempJson = {'email' : resetPasswordInfo!['email'], 'token' : tokenController.text };
         await authRepo.resetPasswordConfirm(tempJson, resetPasswordInfo!['password']);

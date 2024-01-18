@@ -20,6 +20,7 @@ class _AuthCreateAccountPageState extends State<AuthCreateAccountPage> {
     // TODO: implement initState
     super.initState();
     controller = OtpResetPasswordController();
+    controller.init(context);
     controller.addListener(() {setState(() {
     });});
   }
