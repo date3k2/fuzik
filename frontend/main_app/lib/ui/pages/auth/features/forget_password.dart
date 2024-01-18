@@ -66,6 +66,37 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 20),
+            TextFormField(
+                controller: controller.passwordController,
+                validator: controller.validatePassword,
+                decoration: InputDecoration(
+                    labelText: 'Mật khẩu',
+                    hintText: 'Nhập mật khẩu',
+                    prefixIcon: Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(controller.isShowPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                      onPressed: controller.setShowPassword,
+                    )),
+                obscureText: !controller.isShowPassword),
+            SizedBox(height: 16),
+            TextFormField(
+              controller: controller.resetPasswordController,
+              validator: controller.validateRetypePassword,
+              decoration: InputDecoration(
+                  labelText: 'Xác nhận mật khẩu',
+                  hintText: 'Nhập lại mật khẩu',
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: Icon(controller.isShowRetypePassword
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: controller.setShowRetypePassword,
+                  )),
+              obscureText: !controller.isShowRetypePassword,
+            ),
+            SizedBox(height: 20),
             OutlinedButton(
               onPressed: controller.confirm,
               child: Center(child: Text('QUÊN MẬT KHẨU')),

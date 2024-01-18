@@ -74,10 +74,10 @@ class AuthRepository {
   }
 
   /// POST /reset_password_confirm
-  Future<JSON> resetPasswordConfirm(JSON query) async {
+  Future<JSON> resetPasswordConfirm(JSON query, String password) async {
     try {
-      final uri = Uri.https(baseURL, 'signup', query);
-      final response = await dio.postUri(uri);
+      final uri = Uri.https(baseURL, 'reset_password_confirm', query);
+      final response = await dio.postUri(uri, data: password);
       // When response status code is 200
       return response.data;
     } on DioException catch (e) {

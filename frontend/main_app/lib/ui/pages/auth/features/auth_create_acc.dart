@@ -71,9 +71,7 @@ class _AuthCreateAccountPageState extends State<AuthCreateAccountPage> {
             ),
             SizedBox(height: 20),
             OutlinedButton(
-              onPressed: () {
-                // Handle OTP verification
-              },
+              onPressed: controller.confirmOtp,
               child: Center(child: Text('XÁC NHẬN')),
             ),
             SizedBox(height: 10),
@@ -81,15 +79,13 @@ class _AuthCreateAccountPageState extends State<AuthCreateAccountPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Handle resend OTP
-                  },
+                  onPressed: controller.resendOtp,
                   child: Text(
                     'Gửi lại mã xác thực', style: TextStyle(color: AppColors.yellow),
                   ),
                 ),
                 Text(
-                  'Thời gian hiệu lực: 00:01:30',
+                  'Thời gian hiệu lực: ${controller.timeLeftResult}',
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
