@@ -1,23 +1,17 @@
 part of 'ui.dart';
 
 class UploadMusicPage extends StatelessWidget {
-  // static final GoRoute route = GoRoute(
-  //     path: '/register',
-  //     name: 'register',
-  //     builder: (context, state) => UploadMusicPage()
-  // );
+  static final GoRoute route = GoRoute(
+      path: '/song/upload',
+      name: 'upload',
+      builder: (context, state) => UploadMusicPage()
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back action
-          },
-        ),
-        title: Text('Upload Music Page'),
+        title: Text('Tải lên'),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -91,10 +85,9 @@ class UploadMusicPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle cancel action
+                    context.pop();
                   },
                   child: Text('Cancel'),
-                  style: ElevatedButton.styleFrom(primary: Colors.grey),
                 ),
               ],
             ),

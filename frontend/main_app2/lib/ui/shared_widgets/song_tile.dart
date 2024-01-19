@@ -15,15 +15,21 @@ class SongTile extends StatelessWidget {
       onTap: () async {
         bool result = await PlayMusicController.downloadMusicInfo(song, false);
         if (context.mounted) {
-          context.pushNamed('playSong');
+          showModalBottomSheet(
+              isScrollControlled: true,
+              useRootNavigator: true,
+              useSafeArea: true,
+              context: context,
+              builder: (context) => MusicPlayer());
         }
       },
       onLongPress: () async {
         bool result = await PlayMusicController.downloadMusicInfo(song, true);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                  result? "${song.name} đã được thêm vào danh sách phát hiện tại.": "${song.name} đã trong danh sách phát hiện tại.")));
+              content: Text(result
+                  ? "${song.name} đã được thêm vào danh sách phát hiện tại."
+                  : "${song.name} đã trong danh sách phát hiện tại.")));
         }
       },
       leading: Icon(Icons.music_note),

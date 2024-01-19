@@ -6,6 +6,7 @@ import 'package:fuzik_app/repositories/repo.dart';
 import 'package:fuzik_app/ui/navigator/navigator.dart';
 import 'package:fuzik_app/ui/pages/player/features/play_music_smaller.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 abstract class PlayMusicController {
   static final player = AudioPlayer();
@@ -26,7 +27,11 @@ abstract class PlayMusicController {
       return false;
     }
     String path = await songRepo.getLinkOfSong(song.link);
-    AudioSource source = AudioSource.uri(Uri.parse(path));
+    AudioSource source = AudioSource.uri(Uri.parse(path), tag: MediaItem(
+        id: song.id.toString(),
+        title: song.name,
+        artist: song.userId
+    ));
     if (!isAddToList) {
       await playList.clear();
       songPlaying.clear();

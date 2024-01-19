@@ -15,13 +15,15 @@ class AlbumArtwork extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP_w0XTGoOeoBvW4aic-v1PBjkc3w9nYIbsw&usqp=CAU'),
-                  fit: BoxFit.cover,
+            Flexible(
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP_w0XTGoOeoBvW4aic-v1PBjkc3w9nYIbsw&usqp=CAU'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                borderRadius: BorderRadius.circular(16),
               ),
             ),
             Text(album.name ?? "Album không có tên"),

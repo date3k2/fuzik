@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuzik_app/models/entity/song.dart';
+import 'package:fuzik_app/ui/pages/player/features/ui.dart';
 import 'package:fuzik_app/ultility/controller/player/play_music_controller.dart';
-import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:just_audio/just_audio.dart';
 
 class MusicPlayerSmaller extends StatefulWidget {
   const MusicPlayerSmaller({super.key});
@@ -17,7 +15,12 @@ class _MusicPlayerSmallerState extends State<MusicPlayerSmaller> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.pushNamed('playSong'),
+      onTap: () => showModalBottomSheet(
+          isScrollControlled: true,
+          useRootNavigator: true,
+          useSafeArea: true,
+          context: context,
+          builder: (context) => MusicPlayer()),
       child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -103,6 +106,7 @@ class _MusicPlayerSmallerState extends State<MusicPlayerSmaller> {
                               return Slider(
                                 value: percent.clamp(0, 1),
                                 secondaryTrackValue: buffPercent.clamp(0, 1),
+                                allowedInteraction: SliderInteraction.slideOnly,
                                 // Current position of the song
                                 min: 0,
                                 max: 1,
