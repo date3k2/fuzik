@@ -1,18 +1,25 @@
-import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fuzik_app/models/entity/models.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/base.dart';
-import 'package:fuzik_app/repositories/repo.dart';
 
 class SongRepository {
   /// POST /song"
-  Future<JSON> uploadSong(JSON query, MultipartFile song) async {
+  Future<JSON> uploadSong(String name, PlatformFile song) async {
     try {
-      final uri = Uri.https(baseURL, 'song');
-      final response = await dio.postUri(uri, data: File, options: Options(
-        contentType: 'audio/mpeg'
+      final uri = Uri.https(baseURL, 'song', {'name': name});
+      final data = await song.readStream!.first;
+      final songFile = MultipartFile.fromBytes(
+          data, filename: song.name, contentType: MediaType('audio', 'mpeg'));
+      FormData form = FormData.fromMap({
+        'music': songFile
+      });
+      print(songFile.contentType);
+      final response = await dio.postUri(uri, data: form, options: Options(
+          contentType: 'multipart/form-data'
       ));
       // When response status code is 200
       return response.data;
@@ -31,7 +38,6 @@ class SongRepository {
       }
     }
     catch (e) {
-      // Error by request validation
       rethrow;
     }
   }
