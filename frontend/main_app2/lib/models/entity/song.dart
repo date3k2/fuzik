@@ -16,6 +16,8 @@ class Song
   @JsonKey(name:"user_id")
   final String userId;
   final int? albumId;
+  @JsonKey(includeFromJson: false)
+  String? author;
 
   Song({this.id, required this.name, this.description, required this.createdAt, this.lyric, required this.link, required this.userId, this.albumId});
 

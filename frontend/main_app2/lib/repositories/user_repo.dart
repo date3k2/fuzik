@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fuzik_app/data/storage.dart';
 import 'package:fuzik_app/models/entity/user.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/base.dart';
@@ -74,12 +75,14 @@ class UserRepository {
   }
 
   /// GET /user/info
-  Future<User> getUserInfo(JSON request) async {
+  Future<User> getUserInfo() async {
     try {
       final uri = Uri.https(baseURL, 'user/info');
-      final response = await dio.getUri(uri, data: request);
+      final response = await dio.getUri(uri);
+      final result =  User.fromJson(response.data);
+      storage.setString('user_email', result.email);
       // When response status code is 200
-      return User.fromJson(response.data);
+      return result;
     } on DioException catch (e) {
       // Error by bad request
       if (e.response?.statusCode == 401) {
