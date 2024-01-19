@@ -10,6 +10,7 @@ class User {
   final String email;
   final DateTime? birthDate;
   final String? phoneNumber;
+  @JsonKey(fromJson: _genderFromJson, toJson: _genderToJson)
   final Gender gender;
 
   User({required this.name, required this.email, this.birthDate, this.phoneNumber, required this.gender});
@@ -17,4 +18,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  static Gender _genderFromJson(int number) => Gender.values[number];
+  static int _genderToJson(Gender gender) => Gender.values.indexOf(gender);
 }

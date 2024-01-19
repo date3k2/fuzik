@@ -63,9 +63,7 @@ class SearchMusicPage extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: const <Widget>[
-                AlbumArtwork(
-                    title: 'Grainy day', image: 'assets/grainy_day.jpg'),
-                AlbumArtwork(title: 'Bloom', image: 'assets/bloom.jpg'),
+
               ],
             ),
           ),

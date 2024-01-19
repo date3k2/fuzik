@@ -14,7 +14,8 @@ final router = GoRouter(
       ForgotPasswordPage.route,
       ResetPasswordPage.route,
       MainPage.route,
-      MusicPlayerPage.route
+      MusicPlayerPage.route,
+          ProfilePage.route,
 ]);
 
 final navigationMainKey = GlobalKey<NavigatorState>();

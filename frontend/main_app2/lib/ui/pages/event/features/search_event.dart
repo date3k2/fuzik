@@ -61,8 +61,7 @@ class SearchEventPage extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                AlbumArtwork(title: 'Event 1', image: 'assets/grainy_day.jpg'),
-                AlbumArtwork(title: 'Event 2', image: 'assets/bloom.jpg'),
+
               ],
             ),
           ),

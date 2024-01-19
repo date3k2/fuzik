@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fuzik_app/models/entity/models.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/base.dart';
+import 'package:fuzik_app/repositories/repo.dart';
 
 class SongRepository {
   /// POST /song"
@@ -90,8 +91,9 @@ class SongRepository {
     try {
       final uri = Uri.https(baseURL, 'song/search', {'query': query});
       final response = await dio.getUri(uri);
+      final result = List.of(response.data).map((e) => Song.fromJson(e));
       // When response status code is 200
-      return List.of(response.data).map((e) => Song.fromJson(e)).toList();
+      return result.toList();
     } on DioException catch (e) {
       // Error by bad request
       if (e.response?.statusCode == 401) {

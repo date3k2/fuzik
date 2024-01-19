@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/data/storage.dart';
+import 'package:fuzik_app/models/entity/user.dart';
 import 'package:fuzik_app/repositories/base.dart';
 import 'package:fuzik_app/ultility/interface/information/personal_function.dart';
 import 'package:go_router/go_router.dart';
 
 class PersonalController with ChangeNotifier implements IPersonalFunction {
   final BuildContext context;
+  User? user;
 
   PersonalController(this.context);
 
@@ -16,7 +18,7 @@ class PersonalController with ChangeNotifier implements IPersonalFunction {
 
   @override
   void information() {
-    // TODO: implement information
+    context.push('/profile', extra: user);
   }
 
   @override

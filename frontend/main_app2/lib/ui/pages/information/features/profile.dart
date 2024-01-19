@@ -1,80 +1,94 @@
 part of 'ui.dart';
 
 class ProfilePage extends StatelessWidget {
-  // static final GoRoute route = GoRoute(
-  //     path: '/register',
-  //     name: 'register',
-  //     builder: (context, state) => ProfilePage()
-  // );
+  static final GoRoute route = GoRoute(
+      path: '/profile',
+      name: 'profile',
+      builder: (context, state) => ProfilePage(user: state.extra! as User)
+  );
+
+  final User user;
+  const ProfilePage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back button
-          },
-        ),
-        title: Text('Profile Page'),
+        title: const Text('Thông tin cá nhân'),
       ),
       body: ListView(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 50.0,
-              backgroundColor: Colors.pink,
-            ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            height: 260,
+            child: Stack(
+              children: [
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                            colorFilter: ColorFilter.mode(Color(0xFF3D3D3D), BlendMode.darken),
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                'https://media.saodaily.com/storage/files/lethihong/2022/07/30/rick-roll-la-gi-meme-rick-roll_531-004016.jpg'))
+                  )),
+                 Align(
+                   alignment: Alignment.bottomCenter,
+                   child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: NetworkImage(
+                              'https://cdn.vox-cdn.com/thumbor/WR9hE8wvdM4hfHysXitls9_bCZI=/0x0:1192x795/1400x1400/filters:focal(596x398:597x399)/cdn.vox-cdn.com/uploads/chorus_asset/file/22312759/rickroll_4k.jpg')),
+                      ),
+                    ),
+                 ),]
+                ),
           ),
           Center(
             child: Text(
-              'NGÔ NGỌC SÂM',
-              style: TextStyle(
+              user.name.toUpperCase(),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Họ và tên'),
-            subtitle: Text('Ngô Ngọc Sâm'),
-            trailing: Icon(Icons.edit),
+            leading: const Icon(Icons.person),
+            title: const Text('Họ và tên'),
+            subtitle: Text(user.name),
+            trailing: const Icon(Icons.edit),
           ),
           ListTile(
-            leading: Icon(Icons.email),
-            title: Text('Email'),
-            subtitle: Text('ngosam@gmail.com'),
-            trailing: Icon(Icons.edit),
+            leading: const Icon(Icons.email),
+            title: const Text('Email'),
+            subtitle: Text(user.email),
+            trailing: const Icon(Icons.edit),
           ),
           ListTile(
-            leading: Icon(Icons.cake),
-            title: Text('Ngày sinh'),
-            subtitle: Text('15/12/2003'),
-            trailing: Icon(Icons.edit),
+            leading: const Icon(Icons.cake),
+            title: const Text('Ngày sinh'),
+            subtitle: Text(user.birthDate == null? "Chưa có" : DateFormat.yMd().format(user.birthDate!)),
+            trailing: const Icon(Icons.edit),
           ),
           ListTile(
-            leading: Icon(Icons.transgender),
-            title: Text('Giới tính'),
-            subtitle: Text('Nam'),
-            trailing: Icon(Icons.edit),
+            leading: const Icon(Icons.transgender),
+            title: const Text('Giới tính'),
+            subtitle: Text(["Nam", "Nữ", "Khác"][Gender.values.indexOf(user.gender)]),
+            trailing: const Icon(Icons.edit),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.flag),
             title: Text('Quốc tịch'),
             subtitle: Text('Việt Nam'),
             trailing: Icon(Icons.edit),
           ),
-          ListTile(
-            leading: Icon(Icons.calendar_today),
-            title: Text('Ngày tạo'),
-            subtitle: Text('02/12/2023'),
-            trailing: Icon(Icons.edit),
-          ),
-          ListTile(
+          const ListTile(
               leading: Icon(Icons.lock),
               title: Text('Mật khẩu'),
               subtitle: Text('**********'),

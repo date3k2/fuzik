@@ -1,67 +1,53 @@
 part of '../home.dart';
 
-class AlbumPage extends StatelessWidget {
-  static final branch = StatefulShellBranch(
-     routes: [route]
-  );
+class AlbumPage extends StatefulWidget {
+  static final branch = StatefulShellBranch(routes: [route]);
 
   static final route = GoRoute(
       path: '/album',
       name: 'album',
-      builder: (context, state) => const AlbumPage()
-  );
+      builder: (context, state) => const AlbumPage());
 
   const AlbumPage({super.key});
 
   @override
+  State<AlbumPage> createState() => _AlbumPageState();
+}
+
+class _AlbumPageState extends State<AlbumPage> {
+  late AlbumController _controller;
+  int _reset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AlbumController(context);
+    _controller.addListener(() {
+      setState(() {
+        _reset++;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(10),
-      children: [
-        //TODO: Implement events
-        CarouselSlider(
-          items: List.generate(100, (index) => const ConcertView()),
-          options: CarouselOptions(
-            height: 200,
-            aspectRatio: 3 / 2,
-            enlargeCenterPage: true,
-            autoPlay: true,
-          ),
-        ),
-        //TODO: Implement Album
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Album", style: Theme.of(context).textTheme.titleLarge),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
-          ],
-        ),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (context, index) => AlbumView(),
-              itemCount: 10),
-        ),
-        //TODO: Implement Playlist
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Playlist", style: Theme.of(context).textTheme.titleLarge),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
-          ],
-        ),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => PlaylistView(),
-              itemCount: 10),
-        )
-      ],
+    return RefreshIndicator(
+      onRefresh: _controller.refresh,
+      child: FutureBuilder(
+          future: albumRepo.getAllAlbum(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError)
+              return Center(
+                child: Icon(Icons.error),
+              );
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+            final data = snapshot.requireData;
+            return GridView.count(
+              crossAxisCount: 2,
+              children: data.map((e) => AlbumArtwork(album: e)).toList(),
+            );
+          }),
     );
   }
 }
