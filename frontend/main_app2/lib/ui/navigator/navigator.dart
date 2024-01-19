@@ -16,6 +16,7 @@ final router = GoRouter(
       MainPage.route,
       MusicPlayerPage.route,
           ProfilePage.route,
+          UploadMusicPage.route,
 ]);
 
 final navigationMainKey = GlobalKey<NavigatorState>();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/repo.dart';
+import 'package:fuzik_app/ui/pages/loading_page.dart';
 import 'package:fuzik_app/ultility/interface/auth/register_function.dart';
 import 'package:fuzik_app/ultility/regex/regex.dart';
 import 'package:go_router/go_router.dart';
@@ -37,15 +38,18 @@ class RegisterController with ChangeNotifier implements IRegisterFunction {
     if (!validateForm()) return;
     print(registerForm);
     try {
+      Navigator.of(context!).push(LoadingOverlay());
       final result = await authRepo.signUp(registerForm);
       context?.pushNamed('register-otp');
     } on String catch (e) {
       if (context != null) {
+        context?.pop();
         ScaffoldMessenger.of(context!)
             .showSnackBar(SnackBar(content: Text(e)));
       }
     } catch (e) {
       if (context != null) {
+        context?.pop();
         ScaffoldMessenger.of(context!)
             .showSnackBar(SnackBar(content: Text("Có lỗi xảy ra")));
       }

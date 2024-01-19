@@ -6,12 +6,18 @@ import 'package:fuzik_app/data/config_non_web.dart'
 import 'package:fuzik_app/ui/theme/theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fuzik_app/ultility/controller/player/play_music_controller.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   PlayMusicController.init();
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
   storage = await SharedPreferences.getInstance();
   await dotenv.load();
   configureUrl();

@@ -5,6 +5,7 @@ import "package:fuzik_app/models/entity/song.dart";
 import "package:fuzik_app/ui/shared_widgets/album_artwork.dart";
 import "package:fuzik_app/ui/shared_widgets/recommend_title.dart";
 import "package:fuzik_app/ultility/controller/player/play_music_controller.dart";
+import "package:fuzik_app/ultility/controller/player/upload_music_controller.dart";
 import "package:go_router/go_router.dart";
 import "package:intl/intl.dart";
 import "package:just_audio/just_audio.dart";

@@ -5,6 +5,8 @@ import 'package:fuzik_app/ultility/interface/auth/forget_password_function.dart'
 import 'package:fuzik_app/ultility/regex/regex.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../ui/pages/loading_page.dart';
+
 class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFunction
 {
 
@@ -31,6 +33,7 @@ class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFun
       if (!(key.currentState?.validate()?? false))
         return;
       try {
+        Navigator.of(context!).push(LoadingOverlay());
         await authRepo.resetPassword(emailController.text);
         if (context != null) context?.push('/forget-password/otp', extra: {
           'email': emailController.text,
@@ -38,6 +41,7 @@ class ForgetPasswordController with ChangeNotifier implements IForgetPasswordFun
         });
       }
       on String catch (e) {
+        context?.pop();
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text(e)));
       }
   }

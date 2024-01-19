@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'color.dart';
 
 abstract class AppThemes {
+  static ColorScheme scheme = ColorScheme.fromSeed(
+      brightness: Brightness.dark,
+      seedColor: AppColors.purple,
+      background: AppColors.night,
+      onSurfaceVariant: AppColors.grey,
+      onPrimary: AppColors.yellow
+  );
   static ThemeData nightTheme = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(
-        brightness: Brightness.dark,
-        seedColor: AppColors.purple,
-        background: AppColors.night,
-        onSurfaceVariant: AppColors.grey,
-        onPrimary: AppColors.yellow
-    ),
+    colorScheme: scheme,
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.white),
       floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -33,6 +34,13 @@ abstract class AppThemes {
     ),
     checkboxTheme: const CheckboxThemeData(
       checkColor: MaterialStatePropertyAll(AppColors.night)
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: scheme.onPrimary,
+      foregroundColor: scheme.background,
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      
     )
   );
 }

@@ -14,8 +14,13 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
         title: const Text('Thông tin cá nhân'),
       ),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: ListView(
         children: <Widget>[
           Container(
