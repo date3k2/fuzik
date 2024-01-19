@@ -30,7 +30,7 @@ class _MusicPlayerSmallerState extends State<MusicPlayerSmaller> {
               child: Row(
                 children: [
                   SizedBox(width: 50, child: Icon(Icons.music_note)),
-                  Flexible(
+                  Expanded(
                     child: BlocBuilder(
                         bloc: PlayMusicController.bloc,
                         builder: (context, Song? song) {

@@ -38,6 +38,9 @@ abstract class AppThemes {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: scheme.onPrimary,
       foregroundColor: scheme.background,
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      
     )
   );
 }

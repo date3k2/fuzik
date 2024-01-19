@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/repositories/repo.dart';
+import 'package:fuzik_app/ui/pages/loading_page.dart';
 import 'package:fuzik_app/ultility/interface/player/upload_music_function.dart';
 import 'package:go_router/go_router.dart';
 
@@ -116,14 +117,22 @@ class UploadMusicController with ChangeNotifier implements IUploadMusicFunction 
       return;
     }
     try {
+      Navigator.of(context!).push(LoadingOverlay());
       await songRepo.uploadSong(nameController.text, audio!);
       if (context != null) {
+        context?.pop();
         context?.pop();
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text("Đã đăng ${nameController.text}")));
       }
     }
     on String catch (e) {
+      context?.pop();
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text(e)));
+      return;
+    }
+    catch (e) {
+      context?.pop();
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text("Lỗi xảy ra")));
       return;
     }
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/repo.dart';
+import 'package:fuzik_app/ui/pages/loading_page.dart';
 import 'package:fuzik_app/ultility/interface/auth/otp_reset_password_function.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -46,13 +47,14 @@ class OtpResetPasswordController with ChangeNotifier implements IOtpResetPasswor
   {
     try
     {
-        print(timeLeft);
-        if (timeLeft.inSeconds <= 0) throw "Mã OTP hết hạn";
-        final tempJson = {'email' : resetPasswordInfo!['email'], 'token' : tokenController.text };
-        await authRepo.resetPasswordConfirm(tempJson, resetPasswordInfo!['password']);
+      Navigator.of(context!).push(LoadingOverlay());
+      if (timeLeft.inSeconds <= 0) throw "Mã OTP hết hạn";
+      final tempJson = {'email' : resetPasswordInfo!['email'], 'token' : tokenController.text };
+      await authRepo.resetPasswordConfirm(tempJson, resetPasswordInfo!['password']);
     }
     catch (e) {
       if (context != null){
+        context?.pop();
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(content: Text("Có lỗi xảy ra")));
       }
     }

@@ -4,6 +4,7 @@ import 'package:fuzik_app/models/json.dart';
 import 'package:fuzik_app/repositories/auth_repo.dart';
 import 'package:fuzik_app/repositories/base.dart';
 import 'package:fuzik_app/repositories/repo.dart';
+import 'package:fuzik_app/ui/pages/loading_page.dart';
 import 'package:fuzik_app/ultility/interface/auth/login_function.dart';
 import 'package:fuzik_app/ultility/regex/regex.dart';
 import 'package:go_router/go_router.dart';
@@ -43,17 +44,20 @@ class LoginController with ChangeNotifier implements ILoginFunction {
     if (!validateForm()) return;
     print(loginForm);
     try {
+      Navigator.of(context!).push(LoadingOverlay());
       final token = await authRepo.login(loginForm);
       addAuth(token.accessToken);
       saveToken(token, isSaveLogin);
       context?.goNamed('home');
     } on String catch (e) {
       if (context != null) {
+        context?.pop();
         ScaffoldMessenger.of(context!)
             .showSnackBar(SnackBar(content: Text(e)));
       }
     } catch (e) {
       if (context != null) {
+        context?.pop();
         ScaffoldMessenger.of(context!)
             .showSnackBar(SnackBar(content: Text("Có lỗi xảy ra")));
       }
